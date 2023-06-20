@@ -16,7 +16,7 @@ public class Order
     public int ProductId { get; set; }
     
     /// <summary>
-    /// Связанный объект Продукт
+    /// Связанный список Продуктов
     /// </summary>
-    public Product Product { get; private set; }
+    public List<Product> Products { get; private set; }
 }
