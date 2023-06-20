@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230620145553_InitialMigration")]
+    [Migration("20230620220507_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -92,8 +92,6 @@ namespace Eshop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("Orders");
                 });
 
@@ -105,13 +103,18 @@ namespace Eshop.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
@@ -119,7 +122,7 @@ namespace Eshop.Migrations
             modelBuilder.Entity("Eshop.Models.ClientOrder", b =>
                 {
                     b.HasOne("Eshop.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("ClientOrders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -135,15 +138,21 @@ namespace Eshop.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("Eshop.Models.Product", b =>
+                {
+                    b.HasOne("Eshop.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("Eshop.Models.Client", b =>
+                {
+                    b.Navigation("ClientOrders");
+                });
+
             modelBuilder.Entity("Eshop.Models.Order", b =>
                 {
-                    b.HasOne("Eshop.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
