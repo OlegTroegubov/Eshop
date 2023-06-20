@@ -12,7 +12,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder
             .HasKey(p => p.Id);
         builder
-            .Property(p => p.Name)
+            .Property(p => p.Title)
             .HasMaxLength(250)
             .IsRequired();
         builder
