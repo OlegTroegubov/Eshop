@@ -14,9 +14,9 @@ public class DbSeeder
 
     public async Task Seed()
     {
-        var isEmpty = !await _context.Products.AllAsync(null, default);
+        var isNotEmpty = await _context.Products.AnyAsync();
 
-        if (isEmpty)
+        if (isNotEmpty)
         {
             return;
         }
