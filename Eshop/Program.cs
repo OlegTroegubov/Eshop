@@ -1,4 +1,5 @@
 using Eshop.Models;
+using Eshop.Persistence.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         .SetBasePath(builder.Environment.ContentRootPath)
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
         .Build().GetConnectionString("DefaultConnection")));
+
+//AddSingleton - создает один экземпляр на весь жизенный цикл программы
+//AddScoped - создает один экземпляр на каждый http запрос
+//AddTransient - создает экземпляр каждый раз когда он запрашивается
+builder.Services.AddScoped<DbSeeder>();
 var app = builder.Build();
-// Configure the HTTP request pipeline.
+using var scope = app.Services.CreateScope();
+var dbSeeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+await dbSeeder.Seed();
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
