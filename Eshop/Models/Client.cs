@@ -41,7 +41,7 @@ public class Client
     public string Phone { get; set; }
     
     /// <summary>
-    /// Связанный список КлиентЗаказ
+    /// Связанный список Заказов
     /// </summary>
-    public List<ClientOrder> ClientOrders { get; private set; }
+    public List<Order> Orders { get; private set; }
 }

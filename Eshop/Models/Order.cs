@@ -11,12 +11,17 @@ public class Order
     public int Id { get; set; }
     
     /// <summary>
-    /// Внешний ключ для связи с Продуктом
+    /// Внешний ключ для связи с Клиентом
     /// </summary>
-    public int ProductId { get; set; }
+    public int ClientId { get; set; }
     
     /// <summary>
     /// Связанный список Продуктов
     /// </summary>
     public List<Product> Products { get; private set; }
+    
+    /// <summary>
+    /// Связанный объект Клиент
+    /// </summary>
+    public Client Client { get; private set; }
 }
