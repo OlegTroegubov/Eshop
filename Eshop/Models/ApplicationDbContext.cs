@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Models;
 
@@ -12,4 +13,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<ClientOrder> ClientOrders { get; set; }
     public DbSet<Product> Products { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly((Assembly.GetExecutingAssembly()));
+        base.OnModelCreating(modelBuilder);
+    }
 }
