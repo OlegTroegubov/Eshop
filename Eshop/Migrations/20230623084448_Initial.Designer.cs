@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230620220507_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230623084448_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,46 +37,31 @@ namespace Eshop.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("Login")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("text");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("SecondName")
-                        .HasColumnType("text");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("Eshop.Models.ClientOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ClientOrders");
                 });
 
             modelBuilder.Entity("Eshop.Models.Order", b =>
@@ -87,10 +72,12 @@ namespace Eshop.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
                 });
@@ -110,7 +97,9 @@ namespace Eshop.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.HasKey("Id");
 
@@ -119,23 +108,15 @@ namespace Eshop.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Eshop.Models.ClientOrder", b =>
+            modelBuilder.Entity("Eshop.Models.Order", b =>
                 {
                     b.HasOne("Eshop.Models.Client", "Client")
-                        .WithMany("ClientOrders")
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Eshop.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Client");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Eshop.Models.Product", b =>
@@ -147,7 +128,7 @@ namespace Eshop.Migrations
 
             modelBuilder.Entity("Eshop.Models.Client", b =>
                 {
-                    b.Navigation("ClientOrders");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Eshop.Models.Order", b =>

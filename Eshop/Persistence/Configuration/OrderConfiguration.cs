@@ -11,6 +11,10 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder
             .HasKey(o => o.Id);
         builder
+            .HasOne(o => o.Client)
+            .WithMany(c => c.Orders)
+            .HasForeignKey(o => o.ClientId);
+        builder
             .HasMany(o => o.Products);
     }
 }
