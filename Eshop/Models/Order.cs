@@ -14,14 +14,24 @@ public class Order
     /// Внешний ключ для связи с Клиентом
     /// </summary>
     public int ClientId { get; set; }
+
+    /// <summary>
+    /// Дата заказа
+    /// </summary>
+    public DateTime DateOfOrderTime { get; set; }
     
     /// <summary>
-    /// Связанный список Продуктов
+    /// Сумма заказа
     /// </summary>
-    public List<Product> Products { get; private set; }
-    
+    public decimal Amount { get; set; }
+
     /// <summary>
     /// Связанный объект Клиент
     /// </summary>
     public Client Client { get; private set; }
+
+    public Order()
+    {
+        DateOfOrderTime = DateTime.Now;
+    }
 }

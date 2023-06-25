@@ -39,9 +39,4 @@ public class Client
     /// Номер телефона Клиента
     /// </summary>
     public string Phone { get; set; }
-    
-    /// <summary>
-    /// Связанный список Заказов
-    /// </summary>
-    public List<Order> Orders { get; private set; }
 }
