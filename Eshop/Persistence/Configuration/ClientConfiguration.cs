@@ -28,7 +28,5 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
         builder
             .Property(c => c.Phone)
             .HasMaxLength(250);
-        builder
-            .HasMany(c => c.Orders);
     }
 }
