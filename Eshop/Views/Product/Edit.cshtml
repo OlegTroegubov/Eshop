@@ -1,0 +1,21 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "Редактирование продукта";
+    Layout = "_Layout";
+}
+
+<h2>Редактирование продукта</h2>
+
+<form asp-action="Edit">
+    <div>
+        <label>Название продукта:</label>
+        <input asp-for="Title"/>
+    </div>
+    <div>
+        <label>Цена:</label>
+        <input asp-for="Price"/>
+    </div>
+    <button>Сохранить</button>
+    <a asp-action="Index">Отмена</a>
+</form>

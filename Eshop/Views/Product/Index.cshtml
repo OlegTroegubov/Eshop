@@ -1,8 +1,29 @@
-﻿@model Product
+﻿@model List<Product>
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Название продукта</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Title</td>
+                <td>@product.Price</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Product", new { id = product.Id })">Редактировать</a> |
+                    <a href="@Url.Action("Delete", "Product", new { id = product.Id })">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
