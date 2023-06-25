@@ -19,7 +19,7 @@ builder.Services.AddScoped<DbSeeder>();
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var dbSeeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
-await dbSeeder.Seed();
+await dbSeeder.SeedAsync();
 
 if (!app.Environment.IsDevelopment())
 {

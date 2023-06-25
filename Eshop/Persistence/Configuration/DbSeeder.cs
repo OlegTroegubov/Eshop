@@ -12,7 +12,7 @@ public class DbSeeder
         _context = context;
     }
 
-    public async Task Seed()
+    public async Task SeedAsync()
     {
         var isNotEmpty = await _context.Products.AnyAsync();
 
