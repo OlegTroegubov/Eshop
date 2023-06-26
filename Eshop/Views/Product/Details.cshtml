@@ -1,12 +1,20 @@
-﻿@model Product
+﻿@model Eshop.Models.Product
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+
 <div>
     <h1>Детали продукта</h1>
 </div>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessages))
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessages
+    </div>
+}
 
 <form asp-action="Edit" method="post">
     <input type="hidden" name="Id" value="@Model.Id">
@@ -18,7 +26,7 @@
         <label class="fw-bold">Цена, ₽:</label>
         <input type="text" class="form-control w-25" name="Price" placeholder="Цена" aria-label="Цена" aria-describedby="basic-addon1" value="@Model.Price">
     </div>
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropEdit">Редактировать</button>
+    <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropEdit">Редактировать</button>
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Удалить</button>
     <div>
         <a class="btn btn-outline-dark mt-1" href="@Url.Action("Index", "Product")" role="button">
@@ -26,7 +34,7 @@
         </a>
     </div>
 
-    <!-- Modal For Edit-->
+    <!-- Modal For Edit
     <div class="modal fade" id="staticBackdropEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -44,8 +52,8 @@
             </div>
         </div>
     </div>
+    -->
 </form>
-
 
 <!-- Modal For Delete-->
 <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
@@ -67,5 +75,3 @@
         </div>
     </div>
 </form>
-
-
