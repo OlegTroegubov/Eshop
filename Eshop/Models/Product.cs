@@ -24,6 +24,6 @@ public class Product
     /// Стоимость Продукта
     /// </summary>
     [Required(ErrorMessage = "Пожалуйста, введите стоимость продукта.")]
-    [Range(0, double.MaxValue, ErrorMessage = "Значение стоимости должно быть больше 0.")]
+    [Range(1, double.MaxValue, ErrorMessage = "Значение стоимости должно быть больше 0.")]
     public decimal Price { get; set; }
 }
