@@ -21,7 +21,7 @@ public class OrderProduct
     public int ProductId { get; set; }
     
     /// <summary>
-    /// Количество
+    /// Количество товара
     /// </summary>
     public int Quantity { get; set; }
     

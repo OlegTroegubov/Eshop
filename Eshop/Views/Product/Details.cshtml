@@ -1,0 +1,71 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<div>
+    <h1>Детали продукта</h1>
+</div>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="Id" value="@Model.Id">
+    <div class="mb-2">
+        <label class="fw-bold">Название продукта:</label>
+        <input type="text" class="form-control w-25" name="Title" placeholder="Название продукта" aria-label="Название продукта" aria-describedby="basic-addon1" value="@Model.Title">
+    </div>
+    <div class="mb-2">
+        <label class="fw-bold">Цена, ₽:</label>
+        <input type="text" class="form-control w-25" name="Price" placeholder="Цена" aria-label="Цена" aria-describedby="basic-addon1" value="@Model.Price">
+    </div>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropEdit">Редактировать</button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Удалить</button>
+    <div>
+        <a class="btn btn-outline-dark mt-1" href="@Url.Action("Index", "Product")" role="button">
+            Вернуться обратно
+        </a>
+    </div>
+
+    <!-- Modal For Edit-->
+    <div class="modal fade" id="staticBackdropEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabelEdit">Подтвердите свое действие</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите внести <span class="fw-bold">изменения</span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Далее</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- Modal For Delete-->
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Подтвердите свое действие</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены, что хотите <span class="fw-bold">удалить</span> товар?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary mt-1">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

@@ -5,25 +5,41 @@
     Layout = "_Layout";
 }
 
-<table>
-    <thead>
-        <tr>
-            <th>Название продукта</th>
-            <th>Цена</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container text-center">
+    <div>
+        
+    </div>
+    <div>
+        <div class="row pb-2">
+            <div class="col fw-bold">
+                Название продукта
+            </div>
+            <div class="col fw-bold">
+                Стоимость, ₽
+            </div>
+            <div class="col fw-bold">
+                Просмотр
+            </div>
+        </div>
         @foreach (var product in Model)
         {
-            <tr>
-                <td>@product.Title</td>
-                <td>@product.Price</td>
-                <td>
-                    <a href="@Url.Action("Edit", "Product", new { id = product.Id })">Редактировать</a> |
-                    <a href="@Url.Action("Delete", "Product", new { id = product.Id })">Удалить</a>
-                </td>
-            </tr>
+            <div class="row mb-2 border-bottom">
+                <div class="col">
+                    @product.Title
+                </div>
+                <div class="col">
+                    @product.Price
+                </div>
+                <div class="col">
+                    @* ReSharper disable once HeapView.ObjectAllocation.Evident  *@
+                    <a class="btn btn-primary mb-2" href="@Url.Action("Details", "Product", new { id = product.Id })" role="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
