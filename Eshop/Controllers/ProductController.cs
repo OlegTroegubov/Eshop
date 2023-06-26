@@ -1,7 +1,7 @@
 ﻿using Eshop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+// ReSharper disable All
 
 namespace Eshop.Controllers
 {
@@ -15,45 +15,34 @@ namespace Eshop.Controllers
 
         // GET: Product
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _context.Products.ToListAsync(cancellationToken);
             return View(products);
         }
-
-        // GET: Product/Edit/5
+        
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
             return View(product);
         }
-
-        // POST: Product/Edit/5
+        
         [HttpPost]
-        public async Task<IActionResult> Edit(Product product)
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
-            _context.Update(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: Product/Delete/5
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
-            return View(product);
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
             _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(Product product, CancellationToken cancellationToken)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync(cancellationToken);
+            return RedirectToAction("Details", new { id = product.Id });
         }
     }
 }
