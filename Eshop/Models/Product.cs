@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Eshop.Models;
 
 /// <summary>
 /// Продукт
 /// </summary>
+[SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
 public class Product
 {
     /// <summary>
@@ -17,7 +19,7 @@ public class Product
     /// Внешний ключ для категорий товара
     /// </summary>
     [ForeignKey("ProductCategory")]
-    public int CategoryId { get; set; }
+    public int ProductCategoryId { get; set; }
     
     /// <summary>
     /// Названание Продукта

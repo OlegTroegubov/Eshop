@@ -11,6 +11,12 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         builder
             .HasKey(p => p.Id);
+
+        builder
+            .HasOne(p => p.ProductCategory)
+            .WithMany()
+            .HasForeignKey(p => p.ProductCategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         builder
             .Property(p => p.Title)
