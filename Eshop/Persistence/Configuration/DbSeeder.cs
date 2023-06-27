@@ -15,12 +15,19 @@ public class DbSeeder
     public async Task SeedAsync()
     {
         var isNotEmpty = await _context.Products.AnyAsync();
-
+        
         if (isNotEmpty)
         {
             return;
         }
 
+        var categories = Enumerable.Range(1, 100)
+            .Select(x => new ProductCategory
+            {
+                Name = $"Category №{x}"
+            });
+        await _context.AddRangeAsync(categories);
+        
         var products = Enumerable.Range(1, 100)
             .Select(x => new Product
             {
