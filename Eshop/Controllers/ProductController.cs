@@ -25,21 +25,13 @@ namespace Eshop.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Details(int id, CancellationToken cancellationToken, string errorMessage = null)
+        public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {
             var product = await _context.Products.
                 Include(p => p.ProductCategory).
                 FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
-            
-            ViewBag.Categories = await _context.ProductCategories
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Name
-                })
-                .ToListAsync(cancellationToken);
-
-            ViewBag.ErrorMessages = errorMessage;
+            var categories = await _context.ProductCategories.ToListAsync(cancellationToken);
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(product);
         }
 
@@ -57,21 +49,19 @@ namespace Eshop.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Получение списка ошибок валидации
-                var errorMessages = ModelState.Values
-                    .SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList();
-
-                // Создание строки, объединяющей ошибки валидации
-                var errorMessage = string.Join(", ", errorMessages);
-
-                return RedirectToAction("Details", new { id = product.Id, errorMessage });
+                var errors = ModelState.ToDictionary(x => x.Key, x => x.Value.Errors.Select(e => e.ErrorMessage).ToArray());
+                return BadRequest(errors);
             }
 
             _context.Products.Update(product);
             await _context.SaveChangesAsync(cancellationToken);
-            return RedirectToAction("Details", new { id = product.Id });
+
+            // Формируем URL для перенаправления
+            var redirectUrl = Url.Action("Details", new { id = product.Id });
+
+            // Возвращаем JSON-ответ с URL для перенаправления
+            return Json(new { redirectUrl });
         }
+
     }
 }
