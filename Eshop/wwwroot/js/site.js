@@ -1,4 +1,38 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(function() {
+    $('form').on('submit', function(e) {
+        e.preventDefault(); // Предотвращаем отправку формы
 
-// Write your JavaScript code.
+        var form = $(this);
+
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                // Если ответ успешный, перенаправляем на страницу с деталями
+                window.location.href = response.redirectUrl;
+            },
+            error: function(response) {
+                // Если есть ошибки валидации, обновляем форму и отображаем ошибки
+                if (response.status === 400) {
+                    var errors = response.responseJSON;
+                    displayValidationErrors(errors);
+                }
+            }
+        });
+    });
+});
+
+function displayValidationErrors(errors) {
+    // Очищаем предыдущие ошибки
+    $('.text-danger').empty();
+
+    // Отображаем новые ошибки
+    $.each(errors, function(fieldName, fieldErrors) {
+        var errorContainer = $('[data-valmsg-for="' + fieldName + '"]');
+        $.each(fieldErrors, function(index, errorMessage) {
+            errorContainer.append('<span class="text-danger">' + errorMessage + '</span>');
+        });
+    });
+}
