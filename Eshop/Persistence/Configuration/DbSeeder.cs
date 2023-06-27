@@ -31,6 +31,7 @@ public class DbSeeder
         var products = Enumerable.Range(1, 100)
             .Select(x => new Product
             {
+                ProductCategoryId = x,
                 Title = $"Product №{x}",
                 Price = new Random().Next(100, 3000)
             }).
