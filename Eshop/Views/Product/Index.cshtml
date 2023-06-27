@@ -15,6 +15,9 @@
                 Название продукта
             </div>
             <div class="col fw-bold">
+                Категория товара
+            </div>
+            <div class="col fw-bold">
                 Стоимость, ₽
             </div>
             <div class="col fw-bold">
@@ -26,6 +29,9 @@
             <div class="row mb-2 border-bottom">
                 <div class="col">
                     @product.Title
+                </div>
+                <div class="col">
+                    @product.ProductCategory.Name
                 </div>
                 <div class="col">
                     @product.Price

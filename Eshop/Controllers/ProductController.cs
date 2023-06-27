@@ -1,5 +1,6 @@
 ﻿using Eshop.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -17,14 +18,27 @@ namespace Eshop.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var products = await _context.Products.ToListAsync(cancellationToken);
+            var products = await _context.Products.
+                Include(p => p.ProductCategory).
+                ToListAsync(cancellationToken);
             return View(products);
         }
         
         [HttpGet]
         public async Task<IActionResult> Details(int id, CancellationToken cancellationToken, string errorMessage = null)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            var product = await _context.Products.
+                Include(p => p.ProductCategory).
+                FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            
+            ViewBag.Categories = await _context.ProductCategories
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                })
+                .ToListAsync(cancellationToken);
+
             ViewBag.ErrorMessages = errorMessage;
             return View(product);
         }

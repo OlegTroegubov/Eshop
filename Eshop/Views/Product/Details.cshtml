@@ -23,6 +23,10 @@
         <input type="text" class="form-control w-25" name="Title" placeholder="Название продукта" aria-label="Название продукта" aria-describedby="basic-addon1" value="@Model.Title">
     </div>
     <div class="mb-2">
+        <label class="fw-bold">Категория товара:</label>
+        <select asp-for="ProductCategoryId" class="form-control w-25" asp-items="@ViewBag.Categories"></select>
+    </div>
+    <div class="mb-2">
         <label class="fw-bold">Цена, ₽:</label>
         <input type="text" class="form-control w-25" name="Price" placeholder="Цена" aria-label="Цена" aria-describedby="basic-addon1" value="@Model.Price">
     </div>
