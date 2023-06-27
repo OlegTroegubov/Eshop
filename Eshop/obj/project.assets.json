@@ -1059,11 +1059,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop.csproj",
+      "projectUniqueName": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop\\Eshop.csproj",
       "projectName": "Eshop",
-      "projectPath": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop.csproj",
+      "projectPath": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop\\Eshop.csproj",
       "packagesPath": "C:\\Users\\mrole\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\obj\\",
+      "outputPath": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mrole\\AppData\\Roaming\\NuGet\\NuGet.Config"

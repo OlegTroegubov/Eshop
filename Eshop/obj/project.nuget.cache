@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vcyyv1U9fZpaQtAKfxzL5EOGO0hI39qXFZvd8I8u18u7i47d29oX2pLqLsLyNneqYI78GuJkUneSqSsVVLMNug==",
+  "dgSpecHash": "hj48m+iNsPrZeyg3JG1HrnsSFBGTYad0JUGDv5cLxEVeLtBDNeiLlJDh3c7avRTpqb0U669sVB6JXGnuG/v2vA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop.csproj",
+  "projectFilePath": "C:\\Users\\mrole\\Desktop\\Занятия с Ильей\\Проект\\Eshop\\Eshop\\Eshop\\Eshop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mrole\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\mrole\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0-preview.5.23280.1\\microsoft.entityframeworkcore.8.0.0-preview.5.23280.1.nupkg.sha512",
