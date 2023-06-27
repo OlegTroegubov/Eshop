@@ -28,7 +28,7 @@ public class Order
     /// <summary>
     /// Связанный объект Клиент
     /// </summary>
-    public Client Client { get; private set; }
+    public Client Client { get; }
 
     public Order()
     {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Eshop.Models;
 
@@ -12,6 +13,11 @@ public class Product
     /// </summary>
     [Key]
     public int Id { get; set; }
+    /// <summary>
+    /// Внешний ключ для категорий товара
+    /// </summary>
+    [ForeignKey("ProductCategory")]
+    public int CategoryId { get; set; }
     
     /// <summary>
     /// Названание Продукта
@@ -26,4 +32,9 @@ public class Product
     [Required(ErrorMessage = "Пожалуйста, введите стоимость продукта.")]
     [Range(1, double.MaxValue, ErrorMessage = "Значение стоимости должно быть больше 0.")]
     public decimal Price { get; set; }
+    
+    /// <summary>
+    /// Связанный объект Категория
+    /// </summary>
+    public ProductCategory ProductCategory { get; }
 }
