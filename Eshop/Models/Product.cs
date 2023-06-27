@@ -18,7 +18,9 @@ public class Product
     /// <summary>
     /// Внешний ключ для категорий товара
     /// </summary>
+    [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
     [ForeignKey("ProductCategory")]
+    [Display(Name = "Название категории продукта")]
     public int ProductCategoryId { get; set; }
     
     /// <summary>
@@ -26,6 +28,7 @@ public class Product
     /// </summary>
     [Required(ErrorMessage = "Пожалуйста, введите название продукта.")]
     [StringLength(100,MinimumLength = 3,ErrorMessage = "Длина названия продукта должна содержать от 2 до 100 символов.")]
+    [Display(Name = "Название товара")]
     public string Title { get; set; }
     
     /// <summary>
@@ -33,6 +36,7 @@ public class Product
     /// </summary>
     [Required(ErrorMessage = "Пожалуйста, введите стоимость продукта.")]
     [Range(1, double.MaxValue, ErrorMessage = "Значение стоимости должно быть больше 0.")]
+    [Display(Name = "Стоимость")]
     public decimal Price { get; set; }
     
     /// <summary>
