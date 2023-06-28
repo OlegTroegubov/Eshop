@@ -1,5 +1,5 @@
 ﻿$(function() {
-    $('form').on('submit', function(e) {
+    $('form:not(#deleteForm)').on('submit', function(e) {
         e.preventDefault(); // Предотвращаем отправку формы
 
         var form = $(this);
