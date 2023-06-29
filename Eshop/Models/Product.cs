@@ -18,7 +18,7 @@ public class Product
     /// Внешний ключ для категорий товара
     /// </summary>
     [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
-    [Display(Name = "Название категории продукта")]
+    [Display(Name = "Категория продукта")]
     public int ProductCategoryId { get; set; }
     
     /// <summary>
