@@ -25,7 +25,7 @@
 <!--Edit modal-->
 <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" id="edit-modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="editModalLabel">Форма для редактирования товара</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -44,7 +44,12 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.ProductCategoryId, new { @class = "control-label" })
-                        @Html.DropDownListFor(model => model.ProductCategoryId, ViewBag.Categories as SelectList, "Выберите категорию", new { @class = "form-control" })
+                        <select name="ProductCategoryId" class="form-control" id="edit-category-list">
+                            @foreach (ProductCategory productCategory in ViewBag.Categories)
+                            {
+                                <option value="@productCategory.Id">@productCategory.Name</option>
+                            }
+                        </select>
                         @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
                     </div>
 

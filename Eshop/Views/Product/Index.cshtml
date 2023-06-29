@@ -57,7 +57,7 @@
 <!--Add modal-->
 <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" id="add-modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="addModalLabel">Форма для добавления товара</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -65,7 +65,6 @@
             
             <div class="modal-body">
                 <form id="addForm" asp-action="Create" method="post">
-                    @Html.ValidationSummary(true)
                     <div class="form-group">
                         <label>Название продукта</label>
                         <input type="text" class="form-control" name="Title">
@@ -74,8 +73,7 @@
 
                     <div class="form-group">
                         <label>Категория товара</label>
-                        <select name="ProductCategoryId" class="form-control">
-                            <option value="">-- Выберите категорию --</option>
+                        <select name="ProductCategoryId" class="form-control" id="add-category-list">
                             @foreach (ProductCategory productCategory in ViewBag.Categories)
                             {
                                 <option value="@productCategory.Id">@productCategory.Name</option>
