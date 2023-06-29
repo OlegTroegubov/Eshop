@@ -53,8 +53,9 @@ namespace Eshop.Controllers
             var product = await _context.Products.
                 Include(p => p.ProductCategory).
                 FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            
             var categories = await _context.ProductCategories.ToListAsync(cancellationToken);
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = categories;
             return View(product);
         }
 
