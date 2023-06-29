@@ -2,17 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Eshop.Persistence.Configuration;
-
-public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
+namespace Eshop.Persistence.Configuration
 {
-    public void Configure(EntityTypeBuilder<ProductCategory> builder)
+    public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
     {
-        builder
-            .HasKey(pc => pc.Id);
-        builder
-            .Property(pc => pc.Name)
-            .HasMaxLength(100)
-            .IsRequired();
+        public void Configure(EntityTypeBuilder<ProductCategory> builder)
+        {
+            builder
+                .HasKey(pc => pc.Id);
+
+            builder
+                .Property(pc => pc.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+            
+        }
     }
 }

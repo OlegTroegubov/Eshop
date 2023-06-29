@@ -13,13 +13,11 @@ public class Product
     /// <summary>
     /// Первичный ключ для Продукта
     /// </summary>
-    [Key]
     public int Id { get; set; }
     /// <summary>
     /// Внешний ключ для категорий товара
     /// </summary>
     [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
-    [ForeignKey("ProductCategory")]
     [Display(Name = "Название категории продукта")]
     public int ProductCategoryId { get; set; }
     
@@ -42,5 +40,5 @@ public class Product
     /// <summary>
     /// Связанный объект Категория
     /// </summary>
-    public ProductCategory ProductCategory { get; }
+    public ProductCategory ProductCategory { get; set; }
 }
