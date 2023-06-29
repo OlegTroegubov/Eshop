@@ -44,12 +44,7 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.ProductCategoryId, new { @class = "control-label" })
-                        <select name="ProductCategoryId" class="form-control" id="edit-category-list">
-                            @foreach (ProductCategory productCategory in ViewBag.Categories)
-                            {
-                                <option value="@productCategory.Id">@productCategory.Name</option>
-                            }
-                        </select>
+                        @Html.DropDownListFor(model => model.ProductCategoryId, ViewBag.Categories as SelectList, new { @class = "form-control", id="edit-category-list" })
                         @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
                     </div>
 
