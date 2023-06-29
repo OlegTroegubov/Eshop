@@ -1,13 +1,18 @@
 ﻿@model List<Product>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Спиоск продуктов";
     Layout = "_Layout";
 }
 
 <div class="container text-center">
-    <div>
-        
+    <div class="header item d-flex align-items-center justify-content-between mb-4">
+        <div class="text-start">
+            <h2>Таблица товаров</h2>
+        </div>
+        <div class="text-end">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить товар</button>
+        </div>
     </div>
     <div>
         <div class="row pb-2">
@@ -49,3 +54,49 @@
         }
     </div>
 </div>
+<!--Add modal-->
+<div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addModalLabel">Форма для добавления товара</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="addForm" asp-action="Create" method="post">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label>Название продукта</label>
+                        <input type="text" class="form-control" name="Title">
+                        <span data-valmsg-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Категория товара</label>
+                        <select name="ProductCategoryId" class="form-control">
+                            <option value="">-- Выберите категорию --</option>
+                            @foreach (ProductCategory productCategory in ViewBag.Categories)
+                            {
+                                <option value="@productCategory.Id">@productCategory.Name</option>
+                            }
+                        </select>
+                        <span data-valmsg-for="ProductCategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Стоимость, ₽</label>
+                        <input type="text" class="form-control" name="Price">
+                        <span data-valmsg-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button id="saveChangesButton" type="submit" class="btn btn-primary mt-1">Создать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
