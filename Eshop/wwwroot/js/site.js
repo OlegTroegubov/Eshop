@@ -31,6 +31,7 @@ function displayValidationErrors(errors) {
     // Отображаем новые ошибки
     $.each(errors, function(fieldName, fieldErrors) {
         var errorContainer = $('[data-valmsg-for="' + fieldName + '"]');
+        errorContainer.empty(); // Очищаем сообщения об ошибках для данного поля
         $.each(fieldErrors, function(index, errorMessage) {
             errorContainer.append('<span class="text-danger">' + errorMessage + '</span>');
         });
