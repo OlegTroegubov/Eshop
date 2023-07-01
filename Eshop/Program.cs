@@ -1,5 +1,6 @@
 using Eshop.Models;
 using Eshop.Persistence.Configuration;
+using Eshop.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,10 +17,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //AddScoped - создает один экземпляр на каждый http запрос
 //AddTransient - создает экземпляр каждый раз когда он запрашивается
 builder.Services.AddScoped<DbSeeder>();
+builder.Services.AddScoped<ProductCategoryService>();
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var dbSeeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+var productCategoryService = scope.ServiceProvider.GetRequiredService<ProductCategoryService>();
 await dbSeeder.SeedAsync();
+await productCategoryService.GetCategoriesAsync();
 
 if (!app.Environment.IsDevelopment())
 {
