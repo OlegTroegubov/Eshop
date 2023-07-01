@@ -1,4 +1,5 @@
 ﻿using Eshop.Models;
+using Eshop.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,11 @@ namespace Eshop.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ProductController(ApplicationDbContext context)
+        private readonly ProductCategoryService _categoryService;
+        public ProductController(ApplicationDbContext context, ProductCategoryService categoryService)
         {
             _context = context;
+            _categoryService = categoryService;
         }
 
         // GET: Product
@@ -21,9 +24,6 @@ namespace Eshop.Controllers
             var products = await _context.Products.
                 Include(p => p.ProductCategory).
                 ToListAsync(cancellationToken);
-            
-            var categories = await _context.ProductCategories.ToListAsync(cancellationToken);
-            ViewBag.Categories = categories;
 
             return View(products);
         }
@@ -85,6 +85,12 @@ namespace Eshop.Controllers
 
             // Возвращаем JSON-ответ с URL для перенаправления
             return Json(new { redirectUrl });
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetCategories()
+        {
+            return Json(await _categoryService.GetCategoriesAsync());
         }
     }
 }
