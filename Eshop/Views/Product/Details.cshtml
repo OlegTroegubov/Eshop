@@ -5,6 +5,12 @@
     Layout = "_Layout";
 }
 
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="~/js/productCategories.js"></script>
+    <script src="~/js/product.js"></script>
+}
+
 <div>
     <h1>Детали продукта</h1>
     <ul>
@@ -37,21 +43,23 @@
                     </div>
                     
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Title, new { @class = "control-label" })
-                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        <label>Название продукта</label>
+                        <input type="text" class="form-control" name="Title" value="@Model.Title">
+                        <span data-valmsg-for="Title" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.ProductCategoryId, new { @class = "control-label" })
-                        @Html.DropDownListFor(model => model.ProductCategoryId, ViewBag.Categories as SelectList, new { @class = "form-control", id="edit-category-list" })
-                        @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
+                        <label>Категория товара</label>
+                        <select name="ProductCategoryId" class="form-control" id="edit-category-list">
+                            <option value="@Model.ProductCategoryId" selected="selected">@Model.ProductCategory.Name</option>
+                        </select>
+                        <span data-valmsg-for="ProductCategoryId" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Price, new { @class = "control-label" })
-                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        <label>Стоимость, ₽</label>
+                        <input type="text" class="form-control" name="Price" value="@Model.Price">
+                        <span data-valmsg-for="Price" class="text-danger"></span>
                     </div>
                     
                     <div class="modal-footer">
