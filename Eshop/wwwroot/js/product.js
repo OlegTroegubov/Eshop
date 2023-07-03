@@ -23,15 +23,14 @@
     return null;
 }
 
-$('#add-category-list, #edit-category-list').select2({
+$("#add-category-list").select2({
     matcher: Find,
-    dropdownParent: function (element) {
-        if (element.hasClass('modal-content')) {
-            return element.closest('.modal');
-        }
-        return $(document.body);
-    }
+    dropdownParent: $('#add-modal-content')
 });
-
-$('.select2-container').css('display', 'block');
+$("#edit-category-list").select2({
+    matcher: Find,
+    dropdownParent: $('#edit-modal-content')
+});
+$('#add-category-list').next('.select2-container').css('display', 'block');
+$('#edit-category-list').next('.select2-container').css('display', 'block');
 $('.select2-selection.select2-selection--single').css('height', '36px');
