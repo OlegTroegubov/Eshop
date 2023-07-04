@@ -11,7 +11,6 @@ namespace Eshop.Models
         /// <summary>
         /// Первичный ключ 
         /// </summary>
-        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -21,5 +20,9 @@ namespace Eshop.Models
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Длина названия категории должна содержать от 2 до 100 символов.")]
         public string Name { get; set; }
         
+        /// <summary>
+        /// Связанный список подкатегорий
+        /// </summary>
+        public List<SubProductСategory> SubProductСategories { get; set; }
     }
 }

@@ -19,7 +19,7 @@ public class Product
     /// </summary>
     [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
     [Display(Name = "Категория продукта")]
-    public int ProductCategoryId { get; set; }
+    public int SubProductCategoryId { get; set; }
     
     /// <summary>
     /// Названание Продукта
@@ -40,5 +40,5 @@ public class Product
     /// <summary>
     /// Связанный объект Категория
     /// </summary>
-    public ProductCategory ProductCategory { get; set; }
+    public SubProductСategory SubProductСategory { get; set; }
 }
