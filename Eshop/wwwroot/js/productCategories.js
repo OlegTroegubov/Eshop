@@ -6,8 +6,13 @@
         success: function(data) {
             const categories = data;
             const select = $('#add-category-list, #edit-category-list');
-            $.each(categories, function(index, {id, name}) {
-                select.append($('<option></option>').val(id).text(name));
+            $.each(categories, function(index, category) {
+                const optgroup = $('<optgroup></optgroup>').attr('label', category.name);
+                $.each(category.subProductCategories, function(index, subCategory) {
+                    const option = $('<option></option>').text(subCategory.name).val(subCategory.id);
+                    optgroup.append(option);
+                });
+                select.append(optgroup);
             });
         },
     });
