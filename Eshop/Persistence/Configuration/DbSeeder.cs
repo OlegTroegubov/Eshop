@@ -24,14 +24,20 @@ public class DbSeeder
         var categories = Enumerable.Range(1, 100)
             .Select(x => new ProductCategory
             {
-                Name = $"Категория №{x}"
+                Name = $"Категория №{x}",
+                SubProductСategories = Enumerable.Range(1,3)
+                    .Select(y => new SubProductСategory
+                    {
+                        Name = $"Подкатегория №{y}"
+                    }).ToList()
             });
         await _context.AddRangeAsync(categories);
+        await _context.SaveChangesAsync();
         
         var products = Enumerable.Range(1, 100)
             .Select(x => new Product
             {
-                ProductCategoryId = x,
+                SubProductCategoryId = x,
                 Title = $"Продукт №{x}",
                 Price = new Random().Next(100, 3000)
             }).
