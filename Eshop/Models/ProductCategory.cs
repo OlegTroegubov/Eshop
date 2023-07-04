@@ -23,6 +23,6 @@ namespace Eshop.Models
         /// <summary>
         /// Связанный список подкатегорий
         /// </summary>
-        public List<SubProductСategory> SubProductСategories { get; set; }
+        public List<SubProductCategory> SubProductCategories { get; set; }
     }
 }

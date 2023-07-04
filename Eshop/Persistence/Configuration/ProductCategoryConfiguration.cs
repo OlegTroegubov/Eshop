@@ -17,7 +17,7 @@ namespace Eshop.Persistence.Configuration
                 .IsRequired();
 
             builder
-                .HasMany(pc => pc.SubProductСategories)
+                .HasMany(pc => pc.SubProductCategories)
                 .WithOne()
                 .IsRequired();
         }

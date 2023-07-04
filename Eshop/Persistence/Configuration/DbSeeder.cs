@@ -25,10 +25,10 @@ public class DbSeeder
             .Select(x => new ProductCategory
             {
                 Name = $"Категория №{x}",
-                SubProductСategories = Enumerable.Range(1,3)
-                    .Select(y => new SubProductСategory
+                SubProductCategories = Enumerable.Range(1,3)
+                    .Select(y => new SubProductCategory
                     {
-                        Name = $"Подкатегория №{y}"
+                        Name = $"Подкатегория №{x}.{y}"
                     }).ToList()
             });
         await _context.AddRangeAsync(categories);

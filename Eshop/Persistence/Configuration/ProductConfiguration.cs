@@ -21,7 +21,7 @@ namespace Eshop.Persistence.Configuration
                 .IsRequired();
 
             builder
-                .HasOne(p => p.SubProductСategory)
+                .HasOne(p => p.SubProductCategory)
                 .WithMany()
                 .HasForeignKey(p => p.SubProductCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);

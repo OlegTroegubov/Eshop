@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Eshop.Persistence.Configuration;
 
-public class SubProductCategoryConfiguration : IEntityTypeConfiguration<SubProductСategory>
+public class SubProductCategoryConfiguration : IEntityTypeConfiguration<SubProductCategory>
 {
-    public void Configure(EntityTypeBuilder<SubProductСategory> builder)
+    public void Configure(EntityTypeBuilder<SubProductCategory> builder)
     {
         builder
             .HasKey(sbp => sbp.Id);

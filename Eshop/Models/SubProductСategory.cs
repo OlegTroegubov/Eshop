@@ -5,7 +5,7 @@ namespace Eshop.Models;
 /// <summary>
 /// Класс подгатегорий
 /// </summary>
-public class SubProductСategory
+public class SubProductCategory
 {
     /// <summary>
     /// Первичный ключ 

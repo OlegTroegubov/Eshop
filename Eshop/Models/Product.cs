@@ -17,7 +17,7 @@ public class Product
     /// <summary>
     /// Внешний ключ для категорий товара
     /// </summary>
-    [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
+    [Required(ErrorMessage = "Пожалуйста, выберите подкатегорию продукта.")]
     [Display(Name = "Категория продукта")]
     public int SubProductCategoryId { get; set; }
     
@@ -40,5 +40,5 @@ public class Product
     /// <summary>
     /// Связанный объект Категория
     /// </summary>
-    public SubProductСategory SubProductСategory { get; set; }
+    public SubProductCategory SubProductCategory { get; set; }
 }
