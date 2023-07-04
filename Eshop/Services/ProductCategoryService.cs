@@ -14,6 +14,8 @@ public class ProductCategoryService
 
     public async Task<List<ProductCategory>> GetCategoriesAsync()
     {
-        return await _context.ProductCategories.ToListAsync();
+        return await _context.ProductCategories
+            .Include(pc => pc.SubProductCategories)
+            .ToListAsync();
     }
 }

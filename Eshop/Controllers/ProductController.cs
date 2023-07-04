@@ -22,7 +22,7 @@ namespace Eshop.Controllers
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var products = await _context.Products.
-                Include(p => p.ProductCategory).
+                Include(p => p.SubProductCategory).
                 ToListAsync(cancellationToken);
 
             return View(products);
@@ -51,7 +51,7 @@ namespace Eshop.Controllers
         public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
         {
             var product = await _context.Products.
-                Include(p => p.ProductCategory).
+                Include(p => p.SubProductCategory).
                 FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
             
             return View(product);
