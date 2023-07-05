@@ -12,10 +12,10 @@ public class ProductCategoryService
         _context = context;
     }
 
-    public async Task<List<ProductCategory>> GetCategoriesAsync()
+    public async Task<List<ProductCategory>> GetCategoriesAsync(CancellationToken cancellationToken)
     {
         return await _context.ProductCategories
             .Include(pc => pc.SubProductCategories)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 }
