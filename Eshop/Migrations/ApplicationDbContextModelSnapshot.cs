@@ -122,7 +122,7 @@ namespace Eshop.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("SubProductCategoryId")
+                    b.Property<int>("ProductCategoryId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -132,7 +132,7 @@ namespace Eshop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubProductCategoryId");
+                    b.HasIndex("ProductCategoryId");
 
                     b.ToTable("Products");
                 });
@@ -150,32 +150,14 @@ namespace Eshop.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("ParentProductCategoryId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentProductCategoryId");
 
                     b.ToTable("ProductCategories");
-                });
-
-            modelBuilder.Entity("Eshop.Models.SubProductCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<int>("ProductCategoryId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductCategoryId");
-
-                    b.ToTable("SubProductCategories");
                 });
 
             modelBuilder.Entity("Eshop.Models.Order", b =>
@@ -210,27 +192,22 @@ namespace Eshop.Migrations
 
             modelBuilder.Entity("Eshop.Models.Product", b =>
                 {
-                    b.HasOne("Eshop.Models.SubProductCategory", "SubProductCategory")
+                    b.HasOne("Eshop.Models.ProductCategory", "ProductCategory")
                         .WithMany()
-                        .HasForeignKey("SubProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubProductCategory");
-                });
-
-            modelBuilder.Entity("Eshop.Models.SubProductCategory", b =>
-                {
-                    b.HasOne("Eshop.Models.ProductCategory", null)
-                        .WithMany("SubProductCategories")
                         .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ProductCategory");
                 });
 
             modelBuilder.Entity("Eshop.Models.ProductCategory", b =>
                 {
-                    b.Navigation("SubProductCategories");
+                    b.HasOne("Eshop.Models.ProductCategory", "ParentProductCategory")
+                        .WithMany()
+                        .HasForeignKey("ParentProductCategoryId");
+
+                    b.Navigation("ParentProductCategory");
                 });
 #pragma warning restore 612, 618
         }
