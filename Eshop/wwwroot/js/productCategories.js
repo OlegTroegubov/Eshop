@@ -7,12 +7,8 @@
             const categories = data;
             const select = $('#add-category-list, #edit-category-list');
             $.each(categories, function(index, category) {
-                const optgroup = $('<optgroup></optgroup>').attr('label', category.name);
-                $.each(category.subProductCategories, function(index, subCategory) {
-                    const option = $('<option></option>').text(subCategory.name).val(subCategory.id);
-                    optgroup.append(option);
-                });
-                select.append(optgroup);
+                const option = $('<option></option>').text(category.name).val(category.id);
+                select.append(option);
             });
         },
     });
