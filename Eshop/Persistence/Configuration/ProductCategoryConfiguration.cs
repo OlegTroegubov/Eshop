@@ -15,11 +15,6 @@ namespace Eshop.Persistence.Configuration
                 .Property(pc => pc.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-
-            builder
-                .HasMany(pc => pc.SubProductCategories)
-                .WithOne()
-                .IsRequired();
         }
     }
 }

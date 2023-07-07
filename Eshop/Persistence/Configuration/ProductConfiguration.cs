@@ -19,12 +19,6 @@ namespace Eshop.Persistence.Configuration
             builder
                 .Property(p => p.Price)
                 .IsRequired();
-
-            builder
-                .HasOne(p => p.SubProductCategory)
-                .WithMany()
-                .HasForeignKey(p => p.SubProductCategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -21,23 +21,27 @@ public class DbSeeder
             return;
         }
 
-        var categories = Enumerable.Range(1, 100)
+        var parentCategories = Enumerable.Range(1, 100)
             .Select(x => new ProductCategory
             {
                 Name = $"Категория №{x}",
-                SubProductCategories = Enumerable.Range(1,3)
-                    .Select(y => new SubProductCategory
-                    {
-                        Name = $"Подкатегория №{x}.{y}"
-                    }).ToList()
+                ParentProductCategoryId = null
             });
+        await _context.AddRangeAsync(parentCategories);
+        await _context.SaveChangesAsync();
+        var categories = Enumerable.Range(101, 200)
+            .Select(x => new ProductCategory
+            {
+                Name = $"Категория №{x}",
+                ParentProductCategoryId = x - 100
+            }); 
         await _context.AddRangeAsync(categories);
         await _context.SaveChangesAsync();
         
         var products = Enumerable.Range(1, 100)
             .Select(x => new Product
             {
-                SubProductCategoryId = x,
+                ProductCategoryId = new Random().Next(1, 200),
                 Title = $"Продукт №{x}",
                 Price = new Random().Next(100, 3000)
             }).
