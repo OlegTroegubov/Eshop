@@ -12,17 +12,22 @@ namespace Eshop.Models
         /// Первичный ключ 
         /// </summary>
         public int Id { get; set; }
-
+        
+        /// <summary>
+        /// Внешний ключ для родительской категории
+        /// </summary>
+        public int? ParentProductCategoryId { get; set; }
+        
         /// <summary>
         /// Название категории
         /// </summary>
         [Required(ErrorMessage = "Пожалуйста, введите название категории.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Длина названия категории должна содержать от 2 до 100 символов.")]
         public string Name { get; set; }
-        
+
         /// <summary>
-        /// Связанный список подкатегорий
+        /// Связанный объект категории
         /// </summary>
-        public List<SubProductCategory> SubProductCategories { get; set; }
+        public ProductCategory ParentProductCategory { get; set; }
     }
 }
