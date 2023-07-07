@@ -15,14 +15,14 @@ public class ProductService
     public async Task<List<Product>> GetProductsAsync(CancellationToken cancellationToken)
     {
         return await _context.Products
-            .Include(p => p.SubProductCategory)
+            .Include(product => product.ProductCategory)
             .ToListAsync(cancellationToken);
     }
     
     public async Task<Product> GetProductByIdAsync(int id, CancellationToken cancellationToken)
     {
         return await _context.Products
-            .Include(p => p.SubProductCategory)
+            .Include(product => product.ProductCategory)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
     

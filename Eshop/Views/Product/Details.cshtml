@@ -15,7 +15,7 @@
     <h1>Детали продукта</h1>
     <ul>
         <li>Название: @Model.Title</li>
-        <li>Подкатегория: @Model.SubProductCategory.Name</li>
+        <li>Подкатегория: @Model.ProductCategory.Name</li>
         <li>Стоимость: @Model.Price</li>
     </ul>
 </div>
@@ -50,10 +50,10 @@
 
                     <div class="form-group">
                         <label>Категория товара</label>
-                        <select name="SubProductCategoryId" class="form-control" id="edit-category-list">
-                            <option value="@Model.SubProductCategoryId" selected="selected">@Model.SubProductCategory.Name</option>
+                        <select name="ProductCategoryId" class="form-control" id="edit-category-list">
+                            <option value="@Model.ProductCategoryId" selected="selected">@Model.ProductCategory.Name</option>
                         </select>
-                        <span data-valmsg-for="SubProductCategoryId" class="text-danger"></span>
+                        <span data-valmsg-for="ProductCategoryId" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">

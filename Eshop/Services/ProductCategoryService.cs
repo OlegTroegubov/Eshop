@@ -15,7 +15,7 @@ public class ProductCategoryService
     public async Task<List<ProductCategory>> GetCategoriesAsync(CancellationToken cancellationToken)
     {
         return await _context.ProductCategories
-            .Include(pc => pc.SubProductCategories)
+            .Include(category => category.ParentProductCategory)
             .ToListAsync(cancellationToken);
     }
 }
