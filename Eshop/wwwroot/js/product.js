@@ -1,35 +1,21 @@
 ﻿function Find(params, data) {
-    // Если нет поисковых терминов, возвращаем все данные
+    // If there are no search terms, return all of the data
     if ($.trim(params.term) === '') {
         return data;
     }
-
-    // Пропускаем, если отсутствует свойство 'children'
-    if (typeof data.children === 'undefined') {
+    // Do not display the item if there is no 'text' property
+    if (typeof data.text === 'undefined') {
         return null;
     }
-
-    // 'data.children' содержит фактические варианты, с которыми мы сравниваем
-    var filteredChildren = [];
-    $.each(data.children, function (idx, child) {
-        if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
-            filteredChildren.push(child);
-        }
-    });
-
-    // Если были найдены совпадения с дочерними элементами группы часового пояса,
-    // тогда устанавливаем найденные дочерние элементы в группе
-    // и возвращаем объект группы
-    if (filteredChildren.length) {
+    // `params.term` should be the term that is used for searching
+    // `data.text` is the text that is displayed for the data object
+    if (data.text.indexOf(params.term) > -1) {
         var modifiedData = $.extend({}, data, true);
-        modifiedData.children = filteredChildren;
-
-        // Можно вернуть модифицированные объекты отсюда
-        // Это включает в себя настройку совпадений 'children' во вложенных наборах данных
+        // You can return modified objects from here
+        // This includes matching the `children` how you want in nested data sets
         return modifiedData;
     }
-
-    // Возвращаем 'null', если термин не должен быть отображен
+    // Return `null` if the term should not be displayed
     return null;
 }
 
