@@ -41,7 +41,8 @@ public class DbSeeder
         var products = Enumerable.Range(1, 100)
             .Select(x => new Product
             {
-                ProductCategoryId = new Random().Next(1, 200),
+                ///Добавляем только последние вложенные по иерархии категории товара
+                ProductCategoryId = new Random().Next(200, 300),
                 Title = $"Продукт №{x}",
                 Price = new Random().Next(100, 3000)
             }).
