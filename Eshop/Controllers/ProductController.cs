@@ -1,8 +1,6 @@
 ﻿using Eshop.Models;
 using Eshop.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Eshop.Controllers
@@ -73,6 +71,12 @@ namespace Eshop.Controllers
         public async Task<IActionResult> GetCategories(CancellationToken cancellationToken)
         {
             return Json(await _categoryService.GetCategoriesAsync(cancellationToken));
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetProductsByCategory(int id,CancellationToken cancellationToken)
+        {
+            return View("Index", await _productService.GetProductsByCategoryAsync(id, cancellationToken));
         }
     }
 }
