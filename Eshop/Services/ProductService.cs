@@ -18,6 +18,30 @@ public class ProductService
             .Include(product => product.ProductCategory)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<List<Product>> GetProductsByCategoryAsync(int id, CancellationToken cancellationToken)
+    {
+        var products = await GetProductsAsync(cancellationToken);
+        await IncludeCategories(products);
+        
+        var sortedProducts = new List<Product>();
+        foreach (var product in products)
+        {
+            if (product.ProductCategoryId == id)
+            {
+                sortedProducts.Add(product);
+            }
+            else
+            {
+                if (IsContainsCategory(product.ProductCategory, id))
+                {
+                    sortedProducts.Add(product);
+                }
+            }
+        }
+        return sortedProducts;
+    }
+
     
     public async Task<Product> GetProductByIdAsync(int id, CancellationToken cancellationToken)
     {
@@ -42,5 +66,40 @@ public class ProductService
     {
         _context.Products.Remove(await GetProductByIdAsync(id, cancellationToken));
         await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private bool IsContainsCategory(ProductCategory category, int id)
+    {
+        if (category == null)
+        {
+            return false;
+        }
+        
+        if (category.Id == id)
+        {
+            return true;
+        }
+
+        return IsContainsCategory(category.ParentProductCategory, id);
+    }
+    
+    private async Task IncludeCategories(List<Product> products)
+    {
+        foreach (var product in products)
+        {
+            await IncludeCategories(product.ProductCategory);
+        }
+    }
+
+    private async Task IncludeCategories(ProductCategory category)
+    {
+        if (category != null)
+        {
+            await _context.Entry(category)
+                .Reference(c => c.ParentProductCategory)
+                .LoadAsync();
+
+            await IncludeCategories(category.ParentProductCategory);
+        }
     }
 }
