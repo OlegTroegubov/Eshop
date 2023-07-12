@@ -7,11 +7,9 @@ namespace Eshop.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ProductCategoryService _categoryService;
         private readonly ProductService _productService;
-        public ProductController(ProductCategoryService categoryService, ProductService productService)
+        public ProductController(ProductService productService)
         {
-            _categoryService = categoryService;
             _productService = productService;
         }
 
@@ -65,12 +63,6 @@ namespace Eshop.Controllers
 
             await _productService.EditAsync(product, cancellationToken);
             return Json(new { redirectUrl= Url.Action("Details", new { id = product.Id})});
-        }
-        
-        [HttpGet]
-        public async Task<IActionResult> GetCategories(CancellationToken cancellationToken)
-        {
-            return Json(await _categoryService.GetCategoriesAsync(cancellationToken));
         }
         
         [HttpGet]
