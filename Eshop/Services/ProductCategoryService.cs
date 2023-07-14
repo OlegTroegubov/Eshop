@@ -19,10 +19,9 @@ public class ProductCategoryService
             .ToListAsync(cancellationToken);
 
         var maxDepth = GetMaxDepth(allProductCategories);
-        var sortedCategories = allProductCategories
+        return allProductCategories
             .Where(category => GetDepth(category) == maxDepth)
             .ToList();
-        return sortedCategories;
     }
 
     private int GetMaxDepth(List<ProductCategory> productCategories)
