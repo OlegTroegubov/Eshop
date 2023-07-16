@@ -13,13 +13,18 @@ public class ProductController : Controller
         _productService = productService;
     }
 
-    // GET: Product
+    /// <summary>
+    /// Отображает главную страницу, со списком всех продуктов.
+    /// </summary>
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         return View(await _productService.GetProductsAsync(cancellationToken));
     }
 
+    /// <summary>
+    /// Создает новый продукт.
+    /// </summary>
     [HttpPost]
     public async Task<IActionResult> Create(ProductDto product, CancellationToken cancellationToken)
     {
@@ -36,12 +41,18 @@ public class ProductController : Controller
         return Json(new { redirectUrl = Url.Action("Details", new { id = createdProduct.Id }) });
     }
 
+    /// <summary>
+    /// Отображает страницу с подробной информацией по указанному идентификатору.
+    /// </summary>
     [HttpGet]
     public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
     {
         return View(await _productService.GetProductByIdAsync(id, cancellationToken));
     }
 
+    /// <summary>
+    /// Удаляет продукт.
+    /// </summary>
     [HttpPost]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
@@ -49,6 +60,9 @@ public class ProductController : Controller
         return RedirectToAction("Index");
     }
 
+    /// <summary>
+    /// Изменяет продукт.
+    /// </summary>
     [HttpPost]
     public async Task<IActionResult> Edit(ProductDto product, CancellationToken cancellationToken)
     {
