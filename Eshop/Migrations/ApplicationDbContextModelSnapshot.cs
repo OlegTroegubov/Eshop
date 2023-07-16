@@ -58,7 +58,7 @@ namespace Eshop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Eshop.Models.Order", b =>
@@ -82,7 +82,7 @@ namespace Eshop.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Eshop.Models.OrderProduct", b =>
@@ -108,7 +108,7 @@ namespace Eshop.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProduct", (string)null);
                 });
 
             modelBuilder.Entity("Eshop.Models.Product", b =>
@@ -134,7 +134,7 @@ namespace Eshop.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Eshop.Models.ProductCategory", b =>
@@ -157,7 +157,7 @@ namespace Eshop.Migrations
 
                     b.HasIndex("ParentProductCategoryId");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("Eshop.Models.Order", b =>

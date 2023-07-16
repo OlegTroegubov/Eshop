@@ -1,33 +1,27 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿namespace Eshop.Models;
 
-namespace Eshop.Models
+/// <summary>
+///     Класс для категорий товара
+/// </summary>
+public class ProductCategory
 {
     /// <summary>
-    /// Класс для категорий товара
+    ///     Первичный ключ
     /// </summary>
-    public class ProductCategory
-    {
-        /// <summary>
-        /// Первичный ключ 
-        /// </summary>
-        public int Id { get; set; }
-        
-        /// <summary>
-        /// Внешний ключ для родительской категории
-        /// </summary>
-        public int? ParentProductCategoryId { get; set; }
-        
-        /// <summary>
-        /// Название категории
-        /// </summary>
-        [Required(ErrorMessage = "Пожалуйста, введите название категории.")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Длина названия категории должна содержать от 2 до 100 символов.")]
-        public string Name { get; set; }
+    public int Id { get; set; }
 
-        /// <summary>
-        /// Связанный объект категории
-        /// </summary>
-        public ProductCategory ParentProductCategory { get; set; }
-    }
+    /// <summary>
+    ///     Внешний ключ для родительской категории
+    /// </summary>
+    public int? ParentProductCategoryId { get; set; }
+
+    /// <summary>
+    ///     Название категории
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     Связанный объект категории
+    /// </summary>
+    public ProductCategory ParentProductCategory { get; set; }
 }
