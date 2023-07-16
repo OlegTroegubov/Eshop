@@ -21,6 +21,11 @@ public class ProductCategoryDto
     public string Name { get; set; }
 
     /// <summary>
+    ///     Является ли категория последней в иерархии
+    /// </summary>
+    public bool IsLastInHierarchy { get; set; }
+
+    /// <summary>
     ///     Связанный объект категории
     /// </summary>
     public ProductCategoryDto ParentProductCategory { get; set; }

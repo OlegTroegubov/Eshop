@@ -1,11 +1,10 @@
-﻿namespace Eshop.Dtos.Mappers;
+﻿using Eshop.Dtos.ProductCategory;
 
-using Eshop.Models;
-using Eshop.Dtos.ProductCategory;
+namespace Eshop.Dtos.Mappers;
 
 public static class ProductCategoryMapper
 {
-    public static ProductCategoryDto MapToDto(ProductCategory productCategory)
+    public static ProductCategoryDto MapToDto(Models.ProductCategory productCategory)
     {
         if (productCategory == null)
             return null;
@@ -14,19 +13,21 @@ public static class ProductCategoryMapper
         {
             Id = productCategory.Id,
             Name = productCategory.Name,
+            IsLastInHierarchy = productCategory.IsLastInHierarchy,
             ParentProductCategory = MapToDto(productCategory.ParentProductCategory)
         };
     }
 
-    public static ProductCategory MapToProductCategory(ProductCategoryDto productCategoryDto)
+    public static Models.ProductCategory MapToProductCategory(ProductCategoryDto productCategoryDto)
     {
         if (productCategoryDto == null)
             return null;
 
-        return new ProductCategory
+        return new Models.ProductCategory
         {
             Id = productCategoryDto.Id,
             Name = productCategoryDto.Name,
+            IsLastInHierarchy = productCategoryDto.IsLastInHierarchy,
             ParentProductCategoryId = productCategoryDto.ParentProductCategory?.Id,
             ParentProductCategory = MapToProductCategory(productCategoryDto.ParentProductCategory)
         };

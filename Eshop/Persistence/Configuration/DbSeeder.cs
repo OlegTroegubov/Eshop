@@ -15,11 +15,8 @@ public class DbSeeder
     public async Task SeedAsync()
     {
         var isNotEmpty = await _context.Products.AnyAsync();
-        
-        if (isNotEmpty)
-        {
-            return;
-        }
+
+        if (isNotEmpty) return;
 
         var parentCategories = Enumerable.Range(1, 3)
             .Select(x => new ProductCategory
@@ -49,6 +46,7 @@ public class DbSeeder
                             .Select(nestedIndex => new ProductCategory
                             {
                                 Name = $"Ккатегория №{parentIndex}.{childIndex}.{nestedIndex}",
+                                IsLastInHierarchy = true,
                                 ParentProductCategoryId = categories[(parentIndex - 1) * 5 + (childIndex - 1)].Id
                             })
                     )
@@ -63,8 +61,7 @@ public class DbSeeder
                 ProductCategoryId = new Random().Next(19, 168),
                 Title = $"Продукт №{x}",
                 Price = new Random().Next(100, 3000)
-            }).
-            ToList();
+            }).ToList();
         await _context.AddRangeAsync(products);
         await _context.SaveChangesAsync();
     }
