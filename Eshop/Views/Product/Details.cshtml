@@ -1,4 +1,4 @@
-﻿@model Eshop.Models.Product
+﻿@model Eshop.Dtos.Product.ProductDto
 
 @{
     ViewBag.Title = "title";
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <input asp-for="Id" type="hidden">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Название продукта</label>
                         <input type="text" class="form-control" name="Title" value="@Model.Title">
@@ -61,10 +61,10 @@
                         <input type="text" class="form-control" name="Price" value="@Model.Price">
                         <span data-valmsg-for="Price" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <button id="saveChangesButton" type="submit" class="btn btn-primary mt-1" >Сохранить изменения</button>
+                        <button id="saveChangesButton" type="submit" class="btn btn-primary mt-1">Сохранить изменения</button>
                     </div>
                 </form>
             </div>
@@ -95,4 +95,3 @@
         </div>
     </div>
 </div>
-

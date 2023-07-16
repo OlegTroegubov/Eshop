@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model List<Eshop.Dtos.Product.ProductDto>
 
 @{
     ViewBag.Title = "Спиоск продуктов";
@@ -68,7 +68,7 @@
                 <h1 class="modal-title fs-5" id="addModalLabel">Форма для добавления товара</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
+
             <div class="modal-body">
                 <form id="addForm" asp-action="Create" method="post">
                     <div class="form-group">
@@ -85,7 +85,7 @@
 
                     <div class="form-group">
                         <label>Стоимость, ₽</label>
-                        <input type="text" class="form-control" name="Price">
+                        <input type="number" class="form-control" name="Price">
                         <span data-valmsg-for="Price" class="text-danger"></span>
                     </div>
 
