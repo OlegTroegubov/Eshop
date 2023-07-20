@@ -16,6 +16,8 @@ public class ProductDto
     /// <summary>
     ///     Внешний ключ для категорий товара
     /// </summary>
+    [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
+    [Display(Name = "Категория продукта")]
     public int ProductCategoryId { get; set; }
 
     /// <summary>
@@ -38,7 +40,6 @@ public class ProductDto
     /// <summary>
     ///     Связанный объект Категория
     /// </summary>
-    [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
-    [Display(Name = "Категория продукта")]
+    
     public ProductCategoryDto ProductCategory { get; set; }
 }
