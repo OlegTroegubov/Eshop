@@ -45,7 +45,7 @@ public class DbSeeder
                         Enumerable.Range(1, 10)
                             .Select(nestedIndex => new ProductCategory
                             {
-                                Name = $"Ккатегория №{parentIndex}.{childIndex}.{nestedIndex}",
+                                Name = $"Категория №{parentIndex}.{childIndex}.{nestedIndex}",
                                 IsLastInHierarchy = true,
                                 ParentProductCategoryId = categories[(parentIndex - 1) * 5 + (childIndex - 1)].Id
                             })
