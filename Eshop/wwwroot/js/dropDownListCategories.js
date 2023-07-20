@@ -20,13 +20,24 @@
 }
 
 $("#add-category-list").select2({
+    placeholder: "Выберите категорию",
     matcher: Find,
-    dropdownParent: $('#add-modal-content')
+    dropdownParent: $('#add-modal-content'),
+}).on('select2:select', function (e) {
+    const selectedValue = e.params.data.text;
+    const trimmedValue = selectedValue.trim();
+    $('#select2-add-category-list-container').text(trimmedValue);
 });
+
 $("#edit-category-list").select2({
     matcher: Find,
     dropdownParent: $('#edit-modal-content')
+}).on('select2:select', function (e) {
+    const selectedValue = e.params.data.text;
+    const trimmedValue = selectedValue.trim();
+    $('#select2-edit-category-list-container').text(trimmedValue);
 });
+
 $('#add-category-list').next('.select2-container').css('display', 'block');
 $('#edit-category-list').next('.select2-container').css('display', 'block');
 $('.select2-selection.select2-selection--single').css('height', '36px');
