@@ -14,16 +14,25 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    /// Отображает главную страницу, со списком всех продуктов.
+    ///     Отображает главную страницу, со списком всех продуктов.
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public IActionResult Index()
     {
-        return View(await _productService.GetProductsAsync(cancellationToken));
+        return View();
     }
 
     /// <summary>
-    /// Создает новый продукт.
+    ///     Возвращает список продуктов.
+    /// </summary>
+    [HttpGet]
+    public async Task<IActionResult> GetProducts(CancellationToken cancellationToken)
+    {
+        return Json(await _productService.GetProductsAsync(cancellationToken));
+    }
+
+    /// <summary>
+    ///     Создает новый продукт.
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> Create(ProductDto product, CancellationToken cancellationToken)
@@ -42,7 +51,7 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    /// Отображает страницу с подробной информацией по указанному идентификатору.
+    ///     Отображает страницу с подробной информацией по указанному идентификатору.
     /// </summary>
     [HttpGet]
     public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
@@ -51,7 +60,7 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    /// Удаляет продукт.
+    ///     Удаляет продукт.
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
@@ -61,7 +70,7 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    /// Изменяет продукт.
+    ///     Изменяет продукт.
     /// </summary>
     [HttpPost]
     public async Task<IActionResult> Edit(ProductDto product, CancellationToken cancellationToken)
