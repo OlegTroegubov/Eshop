@@ -14,7 +14,7 @@ public static class ProductMapper
             Id = product.Id,
             ProductCategoryId = product.ProductCategoryId,
             Title = product.Title,
-            Price = product.Price,
+            Price = $"{product.Price}₽",
             ProductCategory = ProductCategoryMapper.MapToDto(product.ProductCategory)
         };
     }
@@ -29,7 +29,7 @@ public static class ProductMapper
             Id = productDto.Id,
             ProductCategoryId = productDto.ProductCategoryId,
             Title = productDto.Title,
-            Price = productDto.Price,
+            Price = Convert.ToDecimal(productDto.Price.TrimEnd('₽')),
             ProductCategory = ProductCategoryMapper.MapToProductCategory(productDto.ProductCategory)
         };
     }

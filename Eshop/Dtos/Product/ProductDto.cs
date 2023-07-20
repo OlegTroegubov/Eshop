@@ -16,8 +16,6 @@ public class ProductDto
     /// <summary>
     ///     Внешний ключ для категорий товара
     /// </summary>
-    [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
-    [Display(Name = "Категория продукта")]
     public int ProductCategoryId { get; set; }
 
     /// <summary>
@@ -32,13 +30,15 @@ public class ProductDto
     /// <summary>
     ///     Стоимость Продукта
     /// </summary>
-    [Required(ErrorMessage = "Поле обязательно для заполнения.")]
+    [Required(ErrorMessage = "Пожалуйста, введите стоимость продукта.")]
     [Range(1, double.MaxValue, ErrorMessage = "Значение стоимости должно быть больше 0.")]
     [Display(Name = "Стоимость")]
-    public decimal Price { get; set; }
+    public string Price { get; set; }
 
     /// <summary>
     ///     Связанный объект Категория
     /// </summary>
+    [Required(ErrorMessage = "Пожалуйста, выберите категорию продукта.")]
+    [Display(Name = "Категория продукта")]
     public ProductCategoryDto ProductCategory { get; set; }
 }
