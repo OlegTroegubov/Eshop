@@ -1,64 +1,75 @@
-﻿@model List<Eshop.Dtos.Product.ProductDto>
-
-@{
+﻿@{
     ViewBag.Title = "Спиоск продуктов";
     Layout = "_Layout";
 }
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table-locale-all.min.js"></script>
     <script src="~/js/productCategories.js"></script>
-    <script src="~/js/dropDownListProducts.js"></script>
+    <script src="~/js/dropDownListCategories.js"></script>
+    <script src="~/js/productTable.js"></script>
 }
 
-<div class="container text-center">
-    <div class="header item d-flex align-items-center justify-content-between mb-4">
-        <div class="text-start">
-            <h2>Таблица товаров</h2>
-        </div>
-        <div class="text-end">
+<div id="productTable" style="display:none;">
+    <div id="toolbar">
+        <div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить товар</button>
         </div>
     </div>
-    <div>
-        <div class="row pb-2">
-            <div class="col fw-bold">
+    <table
+        id="table"
+        data-locale="ru-RU"
+        data-toolbar="#toolbar"
+        data-toggle="table"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-fullscreen="true"
+        data-ajax="ajaxRequest"
+        data-show-pagination-switch="true"
+        data-pagination="true"
+        data-id-field="id"
+        data-page-size="6"
+        data-page-list="[10,25,50,100, all]"
+        data-show-footer="true"
+        data-formatter="viewFormatter">
+        <thead>
+        <tr>
+            <th data-field="title"
+                data-sortable="true"
+                data-width="300"
+                data-footer-formatter="totalFormatter"
+                data-align="center">
                 Название продукта
-            </div>
-            <div class="col fw-bold">
+            </th>
+            <th data-field="productCategory.name"
+                data-width="300"
+                data-footer-formatter="nameFormatter"
+                data-align="center">
                 Подкатегория товара
-            </div>
-            <div class="col fw-bold">
+            </th>
+            <th data-field="price"
+                data-sortable="true"
+                data-sorter="priceSorter"
+                data-width="300"
+                data-footer-formatter="priceFormatter"
+                data-align="center">
                 Стоимость, ₽
-            </div>
-            <div class="col fw-bold">
+            </th>
+            <th data-formatter="viewFormatter"
+                data-width="300"
+                data-align="center">
                 Просмотр
-            </div>
-        </div>
-        @foreach (var product in Model)
-        {
-            <div class="row mb-2 border-bottom">
-                <div class="col">
-                    @product.Title
-                </div>
-                <div class="col">
-                    @product.ProductCategory.Name
-                </div>
-                <div class="col">
-                    @product.Price
-                </div>
-                <div class="col">
-                    @* ReSharper disable once HeapView.ObjectAllocation.Evident  *@
-                    <a class="btn btn-primary mb-2" href="@Url.Action("Details", "Product", new { id = product.Id })" role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        }
-    </div>
+            </th>
+        </tr>
+        </thead>
+    </table>
 </div>
 <!--Add modal-->
 <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -79,8 +90,11 @@
 
                     <div class="form-group">
                         <label>Категория товара</label>
-                        <select name="ProductCategoryId" class="form-control" id="add-category-list"></select>
-                        <span data-valmsg-for="ProductCategoryId" class="text-danger"></span>
+                        <select name="ProductCategoryId" class="form-control" id="add-category-list">
+                            <option value="" disabled selected></option>
+                        </select>
+
+                        <span data-valmsg-for="ProductCategory" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
