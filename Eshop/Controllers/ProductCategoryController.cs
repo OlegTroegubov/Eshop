@@ -11,10 +11,10 @@ public class ProductCategoryController : Controller
     {
         _categoryService = categoryService;
     }
-    
+
     [HttpGet]
-    public async Task<IActionResult> GetCategories(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetHierarchy(CancellationToken cancellationToken)
     {
-        return Json(await _categoryService.GetCategoriesAsync(cancellationToken));
+        return Json(await _categoryService.GetHierarchy(cancellationToken));
     }
 }
