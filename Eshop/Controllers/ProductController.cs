@@ -32,7 +32,7 @@ public class ProductController : Controller
     public async Task<IActionResult> GetSortedProducts(string propertyName, string sortOrder,
         CancellationToken cancellationToken)
     {
-        return Json(await _productService.GetSortedProducts(propertyName, sortOrder, cancellationToken));
+        return Json(await _productService.GetSortedProductsAsync(propertyName, sortOrder, cancellationToken));
     }
 
     /// <summary>

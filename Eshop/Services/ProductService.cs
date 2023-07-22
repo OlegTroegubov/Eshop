@@ -85,7 +85,7 @@ public class ProductService
     /// <param name="sortOrder">Значение сортировки(asc или desc).</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список сортированных продуктов</returns>
-    public async Task<List<ProductDto>> GetSortedProducts(string propertyName, string sortOrder,
+    public async Task<List<ProductDto>> GetSortedProductsAsync(string propertyName, string sortOrder,
         CancellationToken cancellationToken)
     {
         switch (propertyName.ToLower())
@@ -101,7 +101,7 @@ public class ProductService
             default: return await GetProductsAsync(cancellationToken);
         }
     }
-
+    #region privateMethods
     /// <summary>
     ///     Возвращает сортированные продукты по увеличению по имени.
     /// </summary>
@@ -153,4 +153,5 @@ public class ProductService
             .Select(product => ProductMapper.MapToDto(product))
             .ToListAsync(cancellationToken);
     }
+    #endregion
 }
