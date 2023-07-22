@@ -23,6 +23,19 @@ public class ProductController : Controller
     }
 
     /// <summary>
+    ///     Возвращает сортированные продукты.
+    /// </summary>
+    /// <param name="propertyName">Имя параметра для сортировки(свойство продукта).</param>
+    /// <param name="sortOrder">Значение сортировки(asc или desc).</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Список сортированных продуктов</returns>
+    public async Task<IActionResult> GetSortedProducts(string propertyName, string sortOrder,
+        CancellationToken cancellationToken)
+    {
+        return Json(await _productService.GetSortedProducts(propertyName, sortOrder, cancellationToken));
+    }
+
+    /// <summary>
     ///     Возвращает список продуктов.
     /// </summary>
     [HttpGet]
