@@ -6,6 +6,28 @@
     })
 }
 
+var isSorted = false;
+
+function Sorter(sortName, sortOrder) {
+    var $table = $('#table');
+    var isSorted = $table.data('sorted'); // Получаем значение атрибута
+
+    if (!isSorted) {
+        $table.data('sorted', true); // Устанавливаем атрибут в true
+
+        var url = '/Product/GetSortedProducts';
+        var data = {
+            propertyName: sortName,
+            sortOrder: sortOrder,
+        };
+
+        $.get(url, data).then(function (data) {
+            $('#table').bootstrapTable('load', data);
+            $table.data('sorted', false); // Сбрасываем атрибут для разрешения повторной сортировки
+        });
+    }
+}
+
 function totalFormatter() {
     return 'Всего'
 }
@@ -22,12 +44,6 @@ function priceFormatter(data) {
     }, 0);
 
     return total.toLocaleString('ru-RU', {style: 'currency', currency: 'RUB'});
-}
-
-function priceSorter(a, b) {
-    var aa = a.replace('₽', '')
-    var bb = b.replace('₽', '')
-    return aa - bb
 }
 
 function viewFormatter(value, row) {
