@@ -103,7 +103,61 @@ public class ProductService
             default: return await GetProductsAsync(cancellationToken);
         }
     }
+
+    /// <summary>
+    ///     Возвращает отфильтрованные продукты по категории.
+    /// </summary>
+    /// <param name="categoryId">Id категории, по которой идет поиск</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Список отфильтрованных продуктов по категории</returns>
+    public async Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId, CancellationToken cancellationToken)
+    {
+        var products = await _context.Products
+            .Include(product => product.ProductCategory)
+            .ToListAsync(cancellationToken);
+
+        if (categoryId == 0) return ProductMapper.ListProductMapToDto(products);
+
+        return products.Where(product => IsContainsCategory(product.ProductCategory, categoryId).Result)
+            .Select(ProductMapper.MapToDto).ToList();
+    }
+
     #region privateMethods
+
+    /// <summary>
+    ///     Проверяет, содержит ли категория категорию, которую мы ищем.
+    /// </summary>
+    /// <param name="productCategory">Категория продукта.</param>
+    /// <param name="categoryId">Id категории, которую мы ищем.</param>
+    /// <returns>Результат false - продукт не относится к категории.</returns>
+    /// <returns>Результат true - продукт относится к категории</returns>
+    private async Task<bool> IsContainsCategory(ProductCategory productCategory, int categoryId)
+    {
+        await IncludeCategories(productCategory);
+        if (productCategory == null) return false;
+
+        if (productCategory.Id == categoryId) return true;
+
+        return await IsContainsCategory(productCategory.ParentProductCategory, categoryId);
+    }
+
+    /// <summary>
+    ///     Загружает ссылки на родительские категории, если такие имеются.
+    /// </summary>
+    /// <param name="category">Категория продукта.</param>
+    /// <returns>Категорию со всеми вложенными родительскими категорями</returns>
+    private async Task IncludeCategories(ProductCategory category)
+    {
+        if (category != null)
+        {
+            await _context.Entry(category)
+                .Reference(c => c.ParentProductCategory)
+                .LoadAsync();
+
+            await IncludeCategories(category.ParentProductCategory);
+        }
+    }
+
     /// <summary>
     ///     Возвращает сортированные продукты по увеличению по имени.
     /// </summary>
