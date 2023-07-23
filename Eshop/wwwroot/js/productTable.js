@@ -1,29 +1,41 @@
 ﻿function ajaxRequest(params) {
     var url = 'Product/GetProducts'
-    $.get(url + '?' + $.param(params.data)).then(function (res) {
-        params.success(res)
-        document.getElementById('productTable').style.display = 'inline';
+    $.get(url + '?' + $.param(params.data)).then(function (products) {
+        params.success(products);
+        document.getElementById('productTable').style.display = 'inline'
+        $('#table').data('table-products', products);
     })
 }
 
 var isSorted = false;
-
 function Sorter(sortName, sortOrder) {
     var $table = $('#table');
-    var isSorted = $table.data('sorted'); // Получаем значение атрибута
+    var isSorted = $table.data('sorted');
 
     if (!isSorted) {
-        $table.data('sorted', true); // Устанавливаем атрибут в true
+        $table.data('sorted', true);
 
         var url = '/Product/GetSortedProducts';
         var data = {
+            products: $table.data('table-products'),
             propertyName: sortName,
             sortOrder: sortOrder,
         };
 
-        $.get(url, data).then(function (data) {
-            $('#table').bootstrapTable('load', data);
-            $table.data('sorted', false); // Сбрасываем атрибут для разрешения повторной сортировки
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                $('#table').bootstrapTable('load', data);
+                $table.data('sorted', false);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error:', errorThrown);
+                $table.data('sorted', false);
+            }
         });
     }
 }
