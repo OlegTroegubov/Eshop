@@ -25,14 +25,18 @@ public class ProductController : Controller
     /// <summary>
     ///     Возвращает сортированные продукты.
     /// </summary>
-    /// <param name="propertyName">Имя параметра для сортировки(свойство продукта).</param>
-    /// <param name="sortOrder">Значение сортировки(asc или desc).</param>
+    /// <param name="result">
+    ///     Результат отправленный с клиента - список продуктов,
+    ///     свойство продукта и параметр сортировки(asc или desc)
+    /// </param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список сортированных продуктов</returns>
-    public async Task<IActionResult> GetSortedProducts(string propertyName, string sortOrder,
+    [HttpPost]
+    public async Task<IActionResult> GetSortedProducts([FromBody] SortedProductDto result,
         CancellationToken cancellationToken)
     {
-        return Json(await _productService.GetSortedProductsAsync(propertyName, sortOrder, cancellationToken));
+        return Json(await _productService.GetSortedProductsAsync(result.Products, result.PropertyName, result.SortOrder,
+            cancellationToken));
     }
 
     /// <summary>
