@@ -81,22 +81,24 @@ public class ProductService
     /// <summary>
     ///     Возвращает сортированные продукты.
     /// </summary>
+    /// <param name="products"></param>
     /// <param name="propertyName">Имя параметра для сортировки(свойство продукта).</param>
     /// <param name="sortOrder">Значение сортировки(asc или desc).</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список сортированных продуктов</returns>
-    public async Task<List<ProductDto>> GetSortedProductsAsync(string propertyName, string sortOrder,
+    public async Task<List<ProductDto>> GetSortedProductsAsync(List<ProductDto> products, string propertyName,
+        string sortOrder,
         CancellationToken cancellationToken)
     {
         switch (propertyName.ToLower())
         {
             case "price":
-                if (sortOrder == "desc") return await GetProductByPriceDesc(cancellationToken);
-                return await GetProductByPriceAsc(cancellationToken);
+                if (sortOrder == "desc") return GetProductByPriceDesc(products);
+                return GetProductByPriceAsc(products);
 
             case "title":
-                if (sortOrder == "desc") return await GetProductByTitleDesc(cancellationToken);
-                return await GetProductByTitleAsc(cancellationToken);
+                if (sortOrder == "desc") return GetProductByTitleDesc(products);
+                return GetProductByTitleAsc(products);
 
             default: return await GetProductsAsync(cancellationToken);
         }
@@ -105,53 +107,54 @@ public class ProductService
     /// <summary>
     ///     Возвращает сортированные продукты по увеличению по имени.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <param name="products">Список продуктов, который требуется отсортировать</param>
     /// <returns>Список сортированных продуктов по имени</returns>
-    private async Task<List<ProductDto>> GetProductByTitleAsc(CancellationToken cancellationToken)
+    private List<ProductDto> GetProductByTitleAsc(List<ProductDto> products)
     {
-        return await _context.Products.Include(product => product.ProductCategory)
+        return ProductMapper.ListDtoMapToProduct(products)
             .OrderBy(product => product.Title)
-            .Select(product => ProductMapper.MapToDto(product))
-            .ToListAsync(cancellationToken);
+            .Select(ProductMapper.MapToDto)
+            .ToList();
     }
 
     /// <summary>
     ///     Возвращает сортированные продукты по уменьшению по имени.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <param name="products">Список продуктов, который требуется отсортировать</param>
     /// <returns>Список сортированных продуктов по имени</returns>
-    private async Task<List<ProductDto>> GetProductByTitleDesc(CancellationToken cancellationToken)
+    private List<ProductDto> GetProductByTitleDesc(List<ProductDto> products)
     {
-        return await _context.Products.Include(product => product.ProductCategory)
+        return ProductMapper.ListDtoMapToProduct(products)
             .OrderByDescending(product => product.Title)
-            .Select(product => ProductMapper.MapToDto(product))
-            .ToListAsync(cancellationToken);
+            .Select(ProductMapper.MapToDto)
+            .ToList();
     }
 
     /// <summary>
     ///     Возвращает сортированные продукты по увеличению цены.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <param name="products">Список продуктов, который требуется отсортировать</param>
     /// <returns>Список сортированных продуктов по цене</returns>
-    private async Task<List<ProductDto>> GetProductByPriceAsc(CancellationToken cancellationToken)
+    private List<ProductDto> GetProductByPriceAsc(List<ProductDto> products)
     {
-        return await _context.Products.Include(product => product.ProductCategory)
+        return ProductMapper.ListDtoMapToProduct(products)
             .OrderBy(product => product.Price)
-            .Select(product => ProductMapper.MapToDto(product))
-            .ToListAsync(cancellationToken);
+            .Select(ProductMapper.MapToDto)
+            .ToList();
     }
 
     /// <summary>
     ///     Возвращает сортированные продукты по уменьшению цены.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <param name="products">Список продуктов, который требуется отсортировать</param>
     /// <returns>Список сортированных продуктов по цене</returns>
-    private async Task<List<ProductDto>> GetProductByPriceDesc(CancellationToken cancellationToken)
+    private List<ProductDto> GetProductByPriceDesc(List<ProductDto> products)
     {
-        return await _context.Products.Include(product => product.ProductCategory)
+        return ProductMapper.ListDtoMapToProduct(products)
             .OrderByDescending(product => product.Price)
-            .Select(product => ProductMapper.MapToDto(product))
-            .ToListAsync(cancellationToken);
+            .Select(ProductMapper.MapToDto)
+            .ToList();
     }
+
     #endregion
 }
