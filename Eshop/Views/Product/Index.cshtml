@@ -15,9 +15,15 @@
 }
 
 <div id="productTable" style="display:none;">
-    <div id="toolbar">
+    <div id="toolbar" class="d-flex">
         <div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить товар</button>
+        </div>
+        <div class="ps-2">
+            <label for="select-category-list">Выберите категорию втовара</label>
+            <select name="ProductCategoryId" id="select-category-list" class="form-control">
+                <option value="0">Все категории</option>
+            </select>
         </div>
     </div>
     <table
@@ -40,6 +46,7 @@
         data-show-footer="true"
         data-formatter="viewFormatter"
         data-custom-sort="Sorter"
+        data-table-products=""
         data-sorted="false">
         <thead>
         <tr>
