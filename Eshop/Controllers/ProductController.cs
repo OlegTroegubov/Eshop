@@ -23,6 +23,17 @@ public class ProductController : Controller
     }
 
     /// <summary>
+    ///     Возвращает отфильтрованные продукты по категории.
+    /// </summary>
+    /// <param name="id">Id категории, по которой идет поиск</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Список отфильтрованных продуктов по категории</returns>
+    public async Task<IActionResult> GetProductsByCategory(int id, CancellationToken cancellationToken)
+    {
+        return Json(await _productService.GetProductsByCategoryAsync(id, cancellationToken));
+    }
+
+    /// <summary>
     ///     Возвращает сортированные продукты.
     /// </summary>
     /// <param name="result">
