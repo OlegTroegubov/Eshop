@@ -15,7 +15,7 @@ public class ProductService
     }
 
     /// <summary>
-    /// Получает список всех продуктов.
+    ///     Получает список всех продуктов.
     /// </summary>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список всех продуктов.</returns>
@@ -28,7 +28,7 @@ public class ProductService
     }
 
     /// <summary>
-    /// Получает продукт по указанному идентификатору.
+    ///     Получает продукт по указанному идентификатору.
     /// </summary>
     /// <param name="productId">Идентификатор продукта.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
@@ -41,7 +41,7 @@ public class ProductService
     }
 
     /// <summary>
-    /// Добавляет продукт.
+    ///     Добавляет продукт.
     /// </summary>
     /// <param name="product">Продукт.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
@@ -55,7 +55,7 @@ public class ProductService
     }
 
     /// <summary>
-    /// Изменяет продукт.
+    ///     Изменяет продукт.
     /// </summary>
     /// <param name="product">Продукт.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
@@ -67,7 +67,7 @@ public class ProductService
     }
 
     /// <summary>
-    /// Удаляет продукт по указанному идентификатору.
+    ///     Удаляет продукт по указанному идентификатору.
     /// </summary>
     /// <param name="productId">Идентификатор удаляемоего продукта.</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
