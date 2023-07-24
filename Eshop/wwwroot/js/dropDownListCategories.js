@@ -40,4 +40,5 @@ $("#edit-category-list").select2({
 
 $('#add-category-list').next('.select2-container').css('display', 'block');
 $('#edit-category-list').next('.select2-container').css('display', 'block');
+$('#select-category-list').next('.select2-container').css('display', 'block');
 $('.select2-selection.select2-selection--single').css('height', '36px');

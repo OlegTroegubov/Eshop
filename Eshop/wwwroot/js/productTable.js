@@ -24,12 +24,6 @@ function priceFormatter(data) {
     return total.toLocaleString('ru-RU', {style: 'currency', currency: 'RUB'});
 }
 
-function priceSorter(a, b) {
-    var aa = a.replace('₽', '')
-    var bb = b.replace('₽', '')
-    return aa - bb
-}
-
 function viewFormatter(value, row) {
     return '<a class="btn btn-primary" href="/Product/Details/' + row.id + '" role="button">'
         + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">'
