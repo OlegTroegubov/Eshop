@@ -1,48 +1,4 @@
 ﻿function ajaxRequest(params) {
-<<<<<<< HEAD
-    var url = 'Product/GetProducts'
-    $.get(url + '?' + $.param(params.data)).then(function (products) {
-        params.success(products);
-        document.getElementById('productTable').style.display = 'inline'
-        $('#table').data('table-products', products);
-    })
-}
-
-var isSorted = false;
-function Sorter(sortName, sortOrder) {
-    var $table = $('#table');
-    var isSorted = $table.data('sorted');
-
-    if (!isSorted) {
-        $table.data('sorted', true);
-
-        var url = '/Product/GetSortedProducts';
-        var data = {
-            products: $table.data('table-products'),
-            propertyName: sortName,
-            sortOrder: sortOrder,
-        };
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function (data) {
-                $('#table').bootstrapTable('load', data);
-                $table.data('sorted', false);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error:', errorThrown);
-                $table.data('sorted', false);
-            }
-        });
-    }
-}
-
-=======
-    
     $.ajax({
         url: 'Product/GetProducts',
         type: 'GET',
@@ -64,7 +20,6 @@ function Sorter(sortName, sortOrder) {
 }
 
 var isSorted = false;
-
 function priceSorter(sortName, sortOrder) {
     if (!isSorted) {
         isSorted = true; 
@@ -87,7 +42,6 @@ function handleCategoryChange() {
     $('#table').bootstrapTable('refresh');
 }
 $('#select-category-list').on('change', handleCategoryChange);
->>>>>>> feature
 function totalFormatter() {
     return 'Всего'
 }
