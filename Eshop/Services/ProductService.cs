@@ -14,17 +14,44 @@ public class ProductService
         _context = context;
     }
 
+    
     /// <summary>
     ///     Получает список всех продуктов.
     /// </summary>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список всех продуктов.</returns>
-    public async Task<List<ProductDto>> GetProductsAsync(CancellationToken cancellationToken)
+    public async Task<List<ProductDto>> GetProductsAsync(int categoryId, string sortName,
+        string sortOrder, CancellationToken cancellationToken)
     {
-        return await _context.Products
-            .Include(product => product.ProductCategory)
-            .Select(x => ProductMapper.MapToDto(x))
-            .ToListAsync(cancellationToken);
+        var products = await _context.Products.Include(product => product.ProductCategory).ToListAsync(cancellationToken);
+
+        if (categoryId != 0)
+        {
+            products = products.Where(product => IsContainsCategory(product.ProductCategory, categoryId).Result).ToList();
+        }
+
+        if (!string.IsNullOrEmpty(sortName) && !string.IsNullOrEmpty(sortOrder))
+        {
+            products = sortName switch
+            {
+                "price" => sortOrder switch
+                {
+                    "asc" => products.OrderBy(product => product.Price).ToList(),
+                    "desc" => products.OrderByDescending(product => product.Price).ToList(),
+                    _ => products
+                },
+                "title" => sortOrder switch
+                {
+                    "asc" => products.OrderBy(product => product.Title).ToList(),
+                    "desc" => products.OrderByDescending(product => product.Title).ToList(),
+                    _ => products
+                },
+                _ => products
+            };
+        }
+
+        return products
+            .Select(product => ProductMapper.MapToDto(product)).ToList();
     }
 
     /// <summary>
@@ -77,4 +104,40 @@ public class ProductService
             await _context.Products.FirstOrDefaultAsync(p => p.Id == productId, cancellationToken));
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    #region privateMethods
+    /// <summary>
+    ///     Проверяет, содержит ли категория категорию, которую мы ищем.
+    /// </summary>
+    /// <param name="productCategory">Категория продукта.</param>
+    /// <param name="categoryId">Id категории, которую мы ищем.</param>
+    /// <returns>Результат false - продукт не относится к категории.</returns>
+    /// <returns>Результат true - продукт относится к категории</returns>
+    private async Task<bool> IsContainsCategory(ProductCategory productCategory, int categoryId)
+    {
+        if (productCategory == null) return false;
+        await IncludeCategories(productCategory);
+        if (productCategory.Id == categoryId) return true;
+
+        return await IsContainsCategory(productCategory.ParentProductCategory, categoryId);
+    }
+
+    /// <summary>
+    ///     Загружает ссылки на родительские категории, если такие имеются.
+    /// </summary>
+    /// <param name="category">Категория продукта.</param>
+    /// <returns>Категорию со всеми вложенными родительскими категорями</returns>
+    private async Task IncludeCategories(ProductCategory category)
+    {
+        if (category != null)
+        {
+            await _context.Entry(category)
+                .Reference(c => c.ParentProductCategory)
+                .LoadAsync();
+
+            await IncludeCategories(category.ParentProductCategory);
+        }
+    }
+
+    #endregion
 }
