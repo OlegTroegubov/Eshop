@@ -13,18 +13,44 @@ public class ProductService
     {
         _context = context;
     }
-
+    
     /// <summary>
     ///     Получает список всех продуктов.
     /// </summary>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список всех продуктов.</returns>
-    public async Task<List<ProductDto>> GetProductsAsync(CancellationToken cancellationToken)
+    public async Task<List<ProductDto>> GetProductsAsync(int categoryId, string sortName,
+        string sortOrder, CancellationToken cancellationToken)
     {
-        return await _context.Products
-            .Include(product => product.ProductCategory)
-            .Select(x => ProductMapper.MapToDto(x))
-            .ToListAsync(cancellationToken);
+        var products = await _context.Products.Include(product => product.ProductCategory).ToListAsync(cancellationToken);
+
+        if (categoryId != 0)
+        {
+            products = products.Where(product => IsContainsCategory(product.ProductCategory, categoryId).Result).ToList();
+        }
+
+        if (!string.IsNullOrEmpty(sortName) && !string.IsNullOrEmpty(sortOrder))
+        {
+            products = sortName switch
+            {
+                "price" => sortOrder switch
+                {
+                    "asc" => products.OrderBy(product => product.Price).ToList(),
+                    "desc" => products.OrderByDescending(product => product.Price).ToList(),
+                    _ => products
+                },
+                "title" => sortOrder switch
+                {
+                    "asc" => products.OrderBy(product => product.Title).ToList(),
+                    "desc" => products.OrderByDescending(product => product.Title).ToList(),
+                    _ => products
+                },
+                _ => products
+            };
+        }
+
+        return products
+            .Select(product => ProductMapper.MapToDto(product)).ToList();
     }
 
     /// <summary>
@@ -78,50 +104,6 @@ public class ProductService
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    /// <summary>
-    ///     Возвращает сортированные продукты.
-    /// </summary>
-    /// <param name="products"></param>
-    /// <param name="propertyName">Имя параметра для сортировки(свойство продукта).</param>
-    /// <param name="sortOrder">Значение сортировки(asc или desc).</param>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
-    /// <returns>Список сортированных продуктов</returns>
-    public async Task<List<ProductDto>> GetSortedProductsAsync(List<ProductDto> products, string propertyName,
-        string sortOrder,
-        CancellationToken cancellationToken)
-    {
-        switch (propertyName.ToLower())
-        {
-            case "price":
-                if (sortOrder == "desc") return GetProductByPriceDesc(products);
-                return GetProductByPriceAsc(products);
-
-            case "title":
-                if (sortOrder == "desc") return GetProductByTitleDesc(products);
-                return GetProductByTitleAsc(products);
-
-            default: return await GetProductsAsync(cancellationToken);
-        }
-    }
-
-    /// <summary>
-    ///     Возвращает отфильтрованные продукты по категории.
-    /// </summary>
-    /// <param name="categoryId">Id категории, по которой идет поиск</param>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
-    /// <returns>Список отфильтрованных продуктов по категории</returns>
-    public async Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId, CancellationToken cancellationToken)
-    {
-        var products = await _context.Products
-            .Include(product => product.ProductCategory)
-            .ToListAsync(cancellationToken);
-
-        if (categoryId == 0) return ProductMapper.ListProductMapToDto(products);
-
-        return products.Where(product => IsContainsCategory(product.ProductCategory, categoryId).Result)
-            .Select(ProductMapper.MapToDto).ToList();
-    }
-
     #region privateMethods
 
     /// <summary>
@@ -133,9 +115,8 @@ public class ProductService
     /// <returns>Результат true - продукт относится к категории</returns>
     private async Task<bool> IsContainsCategory(ProductCategory productCategory, int categoryId)
     {
-        await IncludeCategories(productCategory);
         if (productCategory == null) return false;
-
+        await IncludeCategories(productCategory);
         if (productCategory.Id == categoryId) return true;
 
         return await IsContainsCategory(productCategory.ParentProductCategory, categoryId);
@@ -156,58 +137,6 @@ public class ProductService
 
             await IncludeCategories(category.ParentProductCategory);
         }
-    }
-
-    /// <summary>
-    ///     Возвращает сортированные продукты по увеличению по имени.
-    /// </summary>
-    /// <param name="products">Список продуктов, который требуется отсортировать</param>
-    /// <returns>Список сортированных продуктов по имени</returns>
-    private List<ProductDto> GetProductByTitleAsc(List<ProductDto> products)
-    {
-        return ProductMapper.ListDtoMapToProduct(products)
-            .OrderBy(product => product.Title)
-            .Select(ProductMapper.MapToDto)
-            .ToList();
-    }
-
-    /// <summary>
-    ///     Возвращает сортированные продукты по уменьшению по имени.
-    /// </summary>
-    /// <param name="products">Список продуктов, который требуется отсортировать</param>
-    /// <returns>Список сортированных продуктов по имени</returns>
-    private List<ProductDto> GetProductByTitleDesc(List<ProductDto> products)
-    {
-        return ProductMapper.ListDtoMapToProduct(products)
-            .OrderByDescending(product => product.Title)
-            .Select(ProductMapper.MapToDto)
-            .ToList();
-    }
-
-    /// <summary>
-    ///     Возвращает сортированные продукты по увеличению цены.
-    /// </summary>
-    /// <param name="products">Список продуктов, который требуется отсортировать</param>
-    /// <returns>Список сортированных продуктов по цене</returns>
-    private List<ProductDto> GetProductByPriceAsc(List<ProductDto> products)
-    {
-        return ProductMapper.ListDtoMapToProduct(products)
-            .OrderBy(product => product.Price)
-            .Select(ProductMapper.MapToDto)
-            .ToList();
-    }
-
-    /// <summary>
-    ///     Возвращает сортированные продукты по уменьшению цены.
-    /// </summary>
-    /// <param name="products">Список продуктов, который требуется отсортировать</param>
-    /// <returns>Список сортированных продуктов по цене</returns>
-    private List<ProductDto> GetProductByPriceDesc(List<ProductDto> products)
-    {
-        return ProductMapper.ListDtoMapToProduct(products)
-            .OrderByDescending(product => product.Price)
-            .Select(ProductMapper.MapToDto)
-            .ToList();
     }
 
     #endregion

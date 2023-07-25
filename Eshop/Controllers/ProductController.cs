@@ -21,42 +21,14 @@ public class ProductController : Controller
     {
         return View();
     }
-
-    /// <summary>
-    ///     Возвращает отфильтрованные продукты по категории.
-    /// </summary>
-    /// <param name="id">Id категории, по которой идет поиск</param>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
-    /// <returns>Список отфильтрованных продуктов по категории</returns>
-    public async Task<IActionResult> GetProductsByCategory(int id, CancellationToken cancellationToken)
-    {
-        return Json(await _productService.GetProductsByCategoryAsync(id, cancellationToken));
-    }
-
-    /// <summary>
-    ///     Возвращает сортированные продукты.
-    /// </summary>
-    /// <param name="result">
-    ///     Результат отправленный с клиента - список продуктов,
-    ///     свойство продукта и параметр сортировки(asc или desc)
-    /// </param>
-    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
-    /// <returns>Список сортированных продуктов</returns>
-    [HttpPost]
-    public async Task<IActionResult> GetSortedProducts([FromBody] SortedProductDto result,
-        CancellationToken cancellationToken)
-    {
-        return Json(await _productService.GetSortedProductsAsync(result.Products, result.PropertyName, result.SortOrder,
-            cancellationToken));
-    }
-
+    
     /// <summary>
     ///     Возвращает список продуктов.
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder, CancellationToken cancellationToken)
     {
-        return Json(await _productService.GetProductsAsync(cancellationToken));
+        return Json(await _productService.GetProductsAsync(categoryId, sortName, sortOrder, cancellationToken));
     }
 
     /// <summary>

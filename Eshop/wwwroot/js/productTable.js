@@ -1,4 +1,5 @@
 ﻿function ajaxRequest(params) {
+<<<<<<< HEAD
     var url = 'Product/GetProducts'
     $.get(url + '?' + $.param(params.data)).then(function (products) {
         params.success(products);
@@ -40,6 +41,53 @@ function Sorter(sortName, sortOrder) {
     }
 }
 
+=======
+    
+    $.ajax({
+        url: 'Product/GetProducts',
+        type: 'GET',
+        data: {
+            categoryId: $('#select-category-list').val(),
+            sortName: params.data.sortName,
+            sortOrder: params.data.sortOrder,
+        },
+        success: function (data) {
+            params.success({
+                "rows": data
+            })
+            document.getElementById('productTable').style.display = 'inline';
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error:', errorThrown);
+        }
+    });
+}
+
+var isSorted = false;
+
+function priceSorter(sortName, sortOrder) {
+    if (!isSorted) {
+        isSorted = true; 
+
+        var params = {
+            data: {
+                sortName: sortName,
+                sortOrder: sortOrder
+            },
+            success: function (result) {
+                $('#table').bootstrapTable('load', result);
+                isSorted = false;
+            },
+        };
+        ajaxRequest(params);
+    }
+}
+
+function handleCategoryChange() {
+    $('#table').bootstrapTable('refresh');
+}
+$('#select-category-list').on('change', handleCategoryChange);
+>>>>>>> feature
 function totalFormatter() {
     return 'Всего'
 }

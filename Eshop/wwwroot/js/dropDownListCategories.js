@@ -38,27 +38,12 @@ $("#edit-category-list").select2({
     $('#select2-edit-category-list-container').text(trimmedValue);
 });
 
-// Отдельный метод для обработки выбора категории
-function handleCategorySelect(e) {
+$("#select-category-list").select2({
+}).on('select2:select', function (e) {
     const selectedValue = e.params.data.text;
     const trimmedValue = selectedValue.trim();
     $('#select2-select-category-list-container').text(trimmedValue);
-    var selectedItem = e.params.data.id;
-    var url = '/Product/GetProductsByCategory/' + selectedItem;
-    $.get(url).then(function (data) {
-        $('#table').data('table-products', data);
-        $('#table').bootstrapTable('load', data);
-    });
-    var table = $('#table');
-    table.attr('data-filtred', 'true');
-}
-
-// Инициализация select2 и навешивание обработчика
-$("#select-category-list").select2({
-    placeholder: "Все категории",
-    matcher: Find,
-}).on('select2:select', handleCategorySelect);
-
+});
 
 $('#add-category-list').next('.select2-container').css('display', 'block');
 $('#edit-category-list').next('.select2-container').css('display', 'block');

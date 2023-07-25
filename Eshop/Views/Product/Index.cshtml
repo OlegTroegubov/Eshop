@@ -19,9 +19,8 @@
         <div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить товар</button>
         </div>
-        <div class="ps-2">
-            <label for="select-category-list">Выберите категорию втовара</label>
-            <select name="ProductCategoryId" id="select-category-list" class="form-control">
+        <div>
+            <select id="select-category-list">
                 <option value="0">Все категории</option>
             </select>
         </div>
@@ -44,10 +43,9 @@
         data-page-size="7"
         data-page-list="[10,25,50,100, all]"
         data-show-footer="true"
-        data-formatter="viewFormatter"
-        data-custom-sort="Sorter"
-        data-table-products=""
-        data-sorted="false">
+        data-custom-sort="priceSorter"
+        data-sorted="false"
+        data-formatter="viewFormatter">
         <thead>
         <tr>
             <th data-field="title"
