@@ -1,11 +1,49 @@
 ﻿function ajaxRequest(params) {
-    var url = 'Product/GetProducts'
-    $.get(url + '?' + $.param(params.data)).then(function (res) {
-        params.success(res)
-        document.getElementById('productTable').style.display = 'inline';
-    })
+    
+    $.ajax({
+        url: 'Product/GetProducts',
+        type: 'GET',
+        data: {
+            categoryId: $('#select-category-list').val(),
+            sortName: params.data.sortName,
+            sortOrder: params.data.sortOrder,
+        },
+        success: function (data) {
+            params.success({
+                "rows": data
+            })
+            document.getElementById('productTable').style.display = 'inline';
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error:', errorThrown);
+        }
+    });
 }
 
+var isSorted = false;
+
+function priceSorter(sortName, sortOrder) {
+    if (!isSorted) {
+        isSorted = true; 
+
+        var params = {
+            data: {
+                sortName: sortName,
+                sortOrder: sortOrder
+            },
+            success: function (result) {
+                $('#table').bootstrapTable('load', result);
+                isSorted = false;
+            },
+        };
+        ajaxRequest(params);
+    }
+}
+
+function handleCategoryChange() {
+    $('#table').bootstrapTable('refresh');
+}
+$('#select-category-list').on('change', handleCategoryChange);
 function totalFormatter() {
     return 'Всего'
 }
