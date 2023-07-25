@@ -4,16 +4,6 @@ namespace Eshop.Dtos.Mappers;
 
 public static class ProductMapper
 {
-    public static List<Models.Product> ListDtoMapToProduct(List<ProductDto> productDtos)
-    {
-        return productDtos.Select(MapToProduct).ToList();
-    }
-
-    public static List<ProductDto> ListProductMapToDto(List<Models.Product> products)
-    {
-        return products.Select(MapToDto).ToList();
-    }
-
     public static ProductDto MapToDto(Models.Product product)
     {
         if (product == null)
