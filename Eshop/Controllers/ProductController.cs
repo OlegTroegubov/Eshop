@@ -26,9 +26,9 @@ public class ProductController : Controller
     ///     Возвращает список продуктов.
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder, CancellationToken cancellationToken)
     {
-        return Json(await _productService.GetProductsAsync(cancellationToken));
+        return Json(await _productService.GetProductsAsync(categoryId, sortName, sortOrder, cancellationToken));
     }
 
     /// <summary>
