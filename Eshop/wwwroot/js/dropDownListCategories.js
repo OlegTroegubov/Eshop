@@ -38,6 +38,13 @@ $("#edit-category-list").select2({
     $('#select2-edit-category-list-container').text(trimmedValue);
 });
 
+$("#select-category-list").select2({
+}).on('select2:select', function (e) {
+    const selectedValue = e.params.data.text;
+    const trimmedValue = selectedValue.trim();
+    $('#select2-select-category-list-container').text(trimmedValue);
+});
+
 $('#add-category-list').next('.select2-container').css('display', 'block');
 $('#edit-category-list').next('.select2-container').css('display', 'block');
 $('#select-category-list').next('.select2-container').css('display', 'block');
