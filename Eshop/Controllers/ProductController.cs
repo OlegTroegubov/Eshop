@@ -23,8 +23,13 @@ public class ProductController : Controller
     }
     
     /// <summary>
-    ///     Возвращает список продуктов.
+    ///     Получает список всех продуктов.
     /// </summary>
+    /// <param name="categoryId"> Id категории, по которой идет фильтраци</param>
+    /// <param name="sortName">Имя свойства продукта для сортировки</param>
+    /// <param name="sortOrder">Направление сортировки(asc или desc)</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Список всех продуктов.</returns>
     [HttpGet]
     public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder, CancellationToken cancellationToken)
     {
@@ -32,8 +37,11 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    ///     Создает новый продукт.
+    ///     Добавляет продукт.
     /// </summary>
+    /// <param name="product">Продукт.</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Модель продукта Dto добавленного продукта</returns>
     [HttpPost]
     public async Task<IActionResult> Create(ProductDto product, CancellationToken cancellationToken)
     {
@@ -51,8 +59,11 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    ///     Отображает страницу с подробной информацией по указанному идентификатору.
+    ///     Получает продукт по указанному идентификатору.
     /// </summary>
+    /// <param name="id">Идентификатор продукта.</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Модель продукта Dto с указанным идентификатором.</returns>
     [HttpGet]
     public async Task<IActionResult> Details(int id, CancellationToken cancellationToken)
     {
@@ -60,8 +71,10 @@ public class ProductController : Controller
     }
 
     /// <summary>
-    ///     Удаляет продукт.
+    ///     Удаляет продукт по указанному идентификатору.
     /// </summary>
+    /// <param name="id">Идентификатор удаляемоего продукта.</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     [HttpPost]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
@@ -72,6 +85,9 @@ public class ProductController : Controller
     /// <summary>
     ///     Изменяет продукт.
     /// </summary>
+    /// <param name="product">Продукт.</param>
+    /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+    /// <returns>Модель продукта Dto добавленного продукта</returns>
     [HttpPost]
     public async Task<IActionResult> Edit(ProductDto product, CancellationToken cancellationToken)
     {

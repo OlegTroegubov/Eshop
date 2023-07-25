@@ -13,10 +13,13 @@ public class ProductService
     {
         _context = context;
     }
-    
+
     /// <summary>
     ///     Получает список всех продуктов.
     /// </summary>
+    /// <param name="categoryId"> Id категории, по которой идет фильтраци</param>
+    /// <param name="sortName">Имя свойства продукта для сортировки</param>
+    /// <param name="sortOrder">Направление сортировки(asc или desc)</param>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список всех продуктов.</returns>
     public async Task<List<ProductDto>> GetProductsAsync(int categoryId, string sortName,
