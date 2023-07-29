@@ -15,6 +15,6 @@ public class ProductCategoryController : Controller
     [HttpGet]
     public async Task<IActionResult> GetHierarchy(CancellationToken cancellationToken)
     {
-        return Json(await _categoryService.GetHierarchy(cancellationToken));
+        return Json(await _categoryService.GetHierarchyAsync(cancellationToken));
     }
 }

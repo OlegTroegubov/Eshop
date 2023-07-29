@@ -18,7 +18,7 @@ public class ProductCategoryService
     /// </summary>
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Иерархию категорий.</returns>
-    public async Task<List<ProductCategoryHierarchyDto>> GetHierarchy(CancellationToken cancellationToken)
+    public async Task<List<ProductCategoryHierarchyDto>> GetHierarchyAsync(CancellationToken cancellationToken)
     {
         var productCategories = await _context.ProductCategories
             .Include(category => category.ParentProductCategory)
