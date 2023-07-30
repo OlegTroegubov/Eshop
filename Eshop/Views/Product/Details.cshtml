@@ -58,7 +58,7 @@
 
                     <div class="form-group">
                         <label>Стоимость, ₽</label>
-                        <input type="text" class="form-control" name="Price" value="@Model.Price">
+                        <input type="text" class="form-control" name="Price" value="@Model.Price.Trim('₽')">
                         <span data-valmsg-for="Price" class="text-danger"></span>
                     </div>
 

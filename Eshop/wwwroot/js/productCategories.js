@@ -20,6 +20,7 @@
                         appendOptions(category.childrenCategories, indentation + "&nbsp;&nbsp;&nbsp;&nbsp;");
                     } else {
                         const option = $('<option></option>').html(indentation + category.name).val(category.id);
+                        searchSelect.append($('<option></option>').html(indentation + category.name).val(category.id));
                         select.append(option);
                     }
                 });
