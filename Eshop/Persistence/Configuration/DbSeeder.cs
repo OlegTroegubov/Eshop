@@ -23,12 +23,12 @@ public class DbSeeder
             {
                 Name = $"Категория №{x}",
                 ParentProductCategoryId = null,
-                ChildrenProductCategory = Enumerable.Range(1,5)
+                ChildrenProductCategory = Enumerable.Range(1, 5)
                     .Select(y => new ProductCategory
                     {
                         Name = $"Категория №{x}.{y}",
                         ParentProductCategoryId = x,
-                        ChildrenProductCategory = Enumerable.Range(1,10)
+                        ChildrenProductCategory = Enumerable.Range(1, 10)
                             .Select(z => new ProductCategory
                             {
                                 Name = $"Категория №{x}.{y}.{z}",
@@ -39,7 +39,7 @@ public class DbSeeder
             });
         await _context.AddRangeAsync(productCategories);
         await _context.SaveChangesAsync();
-       
+
         var products = Enumerable.Range(1, 160)
             .Select(x => new Product
             {

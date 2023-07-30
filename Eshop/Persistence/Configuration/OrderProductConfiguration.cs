@@ -10,19 +10,19 @@ public class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
     {
         builder
             .HasKey(op => op.Id);
-        
+
         builder
             .HasOne(op => op.Order)
             .WithMany()
             .HasForeignKey(op => op.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder
             .HasOne(op => op.Product)
             .WithMany()
             .HasForeignKey(op => op.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder
             .Property(op => op.Quantity)
             .IsRequired();

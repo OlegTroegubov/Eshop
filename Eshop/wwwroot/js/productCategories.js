@@ -7,6 +7,7 @@
             const categories = data;
             const select = $('#add-category-list, #edit-category-list');
             const searchSelect = $('#select-category-list');
+
             function appendOptions(categories, indentation = "") {
                 $.each(categories, function (index, category) {
                     const hasChildren = category.childrenCategories.length > 0;
@@ -25,6 +26,7 @@
                     }
                 });
             }
+
             appendOptions(categories);
         },
     });

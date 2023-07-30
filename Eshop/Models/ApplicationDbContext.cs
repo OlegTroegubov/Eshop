@@ -9,6 +9,7 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
+
     public DbSet<Client> Clients { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Product> Products { get; set; }
@@ -16,7 +17,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly((Assembly.GetExecutingAssembly()));
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
     }
 }

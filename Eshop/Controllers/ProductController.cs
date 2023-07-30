@@ -21,7 +21,7 @@ public class ProductController : Controller
     {
         return View();
     }
-    
+
     /// <summary>
     ///     Получает список всех продуктов.
     /// </summary>
@@ -31,7 +31,8 @@ public class ProductController : Controller
     /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
     /// <returns>Список всех продуктов.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder,
+        CancellationToken cancellationToken)
     {
         return Json(await _productService.GetProductsAsync(categoryId, sortName, sortOrder, cancellationToken));
     }

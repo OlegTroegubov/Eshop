@@ -30,20 +30,20 @@ public class ProductService
         {
             var category = await _context.ProductCategories.AsNoTracking()
                 .Include(productCategory => productCategory.ChildrenProductCategory)
-                    .ThenInclude(productCategory => productCategory.ChildrenProductCategory)
+                .ThenInclude(productCategory => productCategory.ChildrenProductCategory)
                 .FirstOrDefaultAsync(productCategory => productCategory.Id == categoryId, cancellationToken);
 
             var categoryIds = category.ChildrenProductCategory
                 .SelectMany(childCategory => childCategory.ChildrenProductCategory
                     .Select(grandchildCategory => grandchildCategory.Id)
-                    .Union(new List<int> { childCategory.Id })) 
+                    .Union(new List<int> { childCategory.Id }))
                 .ToList();
             categoryIds.Add(categoryId);
-            
+
             products = products.Where(product => categoryIds.Contains(product.ProductCategoryId));
         }
+
         if (!string.IsNullOrEmpty(sortName) && !string.IsNullOrEmpty(sortOrder))
-        {
             products = sortName switch
             {
                 "price" => sortOrder switch
@@ -60,7 +60,6 @@ public class ProductService
                 },
                 _ => products
             };
-        }
 
         return await products
             .Include(product => product.ProductCategory)

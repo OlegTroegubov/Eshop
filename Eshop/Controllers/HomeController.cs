@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Eshop.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Eshop.Controllers;
 

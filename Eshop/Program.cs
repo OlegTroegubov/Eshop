@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(new ConfigurationBuilder()
         .SetBasePath(builder.Environment.ContentRootPath)
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile("appsettings.json", false, true)
         .Build().GetConnectionString("DefaultConnection")));
 
 //AddSingleton - создает один экземпляр на весь жизенный цикл программы
@@ -39,7 +39,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

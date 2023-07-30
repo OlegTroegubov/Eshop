@@ -1,42 +1,42 @@
 ﻿namespace Eshop.Models;
 
 /// <summary>
-/// Клиент
+///     Клиент
 /// </summary>
 public class Client
 {
     /// <summary>
-    /// Первичный ключ для Клиента
+    ///     Первичный ключ для Клиента
     /// </summary>
     public int Id { get; set; }
-    
+
     /// <summary>
-    /// Логин Клиента
+    ///     Логин Клиента
     /// </summary>
     public string Login { get; set; }
-    
+
     /// <summary>
-    /// Пароль Клиента
+    ///     Пароль Клиента
     /// </summary>
     public string Password { get; set; }
-    
+
     /// <summary>
-    /// Фамилия Клиента
+    ///     Фамилия Клиента
     /// </summary>
     public string SecondName { get; set; }
-    
+
     /// <summary>
-    /// Имя Клиента
+    ///     Имя Клиента
     /// </summary>
     public string FirstName { get; set; }
-    
+
     /// <summary>
-    /// Дата рождения Клиента
+    ///     Дата рождения Клиента
     /// </summary>
     public DateTime DateOfBirth { get; set; }
-    
+
     /// <summary>
-    /// Номер телефона Клиента
+    ///     Номер телефона Клиента
     /// </summary>
     public string Phone { get; set; }
 }

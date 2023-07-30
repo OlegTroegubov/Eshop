@@ -40,6 +40,6 @@ public class ProductDto
     /// <summary>
     ///     Связанный объект Категория
     /// </summary>
-    
+
     public ProductCategoryDto ProductCategory { get; set; }
 }

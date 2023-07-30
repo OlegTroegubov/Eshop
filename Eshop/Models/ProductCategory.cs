@@ -29,7 +29,7 @@ public class ProductCategory
     ///     Связанный объект категории
     /// </summary>
     public ProductCategory ParentProductCategory { get; set; }
-    
+
     /// <summary>
     ///     Связанный список дочерних категорий
     /// </summary>
