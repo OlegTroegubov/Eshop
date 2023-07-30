@@ -41,6 +41,10 @@ function priceSorter(sortName, sortOrder) {
 function handleCategoryChange() {
     $('#table').bootstrapTable('refresh');
 }
+$('#refreshPage').on('click', function() {
+    location.reload(true);
+});
+
 $('#select-category-list').on('change', handleCategoryChange);
 function totalFormatter() {
     return 'Всего'
