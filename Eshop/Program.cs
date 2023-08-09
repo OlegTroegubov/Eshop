@@ -1,6 +1,7 @@
 using Eshop.Models;
 using Eshop.Persistence.Configuration;
 using Eshop.Services;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ProductCategoryService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddMediatR(typeof(Program));
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var dbSeeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
