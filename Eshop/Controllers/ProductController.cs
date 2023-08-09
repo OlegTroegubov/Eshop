@@ -1,5 +1,4 @@
-﻿using Eshop.Dtos.Product;
-using Eshop.Features.Product.Commands;
+﻿using Eshop.Features.Product.Commands;
 using Eshop.Features.Product.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

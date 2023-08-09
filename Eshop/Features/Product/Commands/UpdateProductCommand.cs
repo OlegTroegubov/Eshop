@@ -23,7 +23,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Unit>
             Id = request.Id,
             ProductCategoryId = request.ProductCategoryId,
             Title = request.Title,
-            Price = request.Price.ToString(CultureInfo.InvariantCulture),
+            Price = request.Price.ToString(CultureInfo.InvariantCulture)
         }, cancellationToken);
 
         return Unit.Value;

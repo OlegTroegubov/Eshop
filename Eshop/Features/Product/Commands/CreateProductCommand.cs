@@ -22,7 +22,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
         {
             ProductCategoryId = request.ProductCategoryId,
             Title = request.Title,
-            Price = request.Price.ToString(CultureInfo.InvariantCulture),
+            Price = request.Price.ToString(CultureInfo.InvariantCulture)
         }, cancellationToken);
     }
 }
