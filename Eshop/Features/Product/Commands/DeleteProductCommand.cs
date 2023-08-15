@@ -1,22 +1,29 @@
-﻿using Eshop.Services;
+﻿using Eshop.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Features.Product.Commands;
 
+/// <summary>
+///     Команда для удаления продукта.
+/// </summary>
+/// <param name="Id">Первичный ключ продукта.</param>
 public record DeleteProductCommand(int Id) : IRequest;
 
 public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Unit>
 {
-    private readonly ProductService _productService;
+    private readonly ApplicationDbContext _context;
 
-    public DeleteProductHandler(ProductService productService)
+    public DeleteProductHandler(ApplicationDbContext context)
     {
-        _productService = productService;
+        _context = context;
     }
 
     public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        await _productService.DeleteAsync(request.Id, cancellationToken);
+        _context.Products.Remove(
+            await _context.Products.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken));
+        await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }

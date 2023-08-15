@@ -19,7 +19,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //AddTransient - создает экземпляр каждый раз когда он запрашивается
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ProductCategoryService>();
-builder.Services.AddScoped<ProductService>();
 builder.Services.AddMediatR(typeof(Program));
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
