@@ -2,6 +2,7 @@
 using Eshop.Dtos.Mappers;
 using Eshop.Dtos.Product;
 using Eshop.Models;
+using Eshop.Persistence;
 using MediatR;
 
 namespace Eshop.Features.Product.Commands;

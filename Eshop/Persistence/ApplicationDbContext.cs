@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
+using Eshop.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Eshop.Models;
+namespace Eshop.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
