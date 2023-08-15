@@ -14,11 +14,11 @@ namespace Eshop.Features.Product.Queries;
 /// <param name="SortOrder">Направление сортировки(desc - по убыванию, asc - по возрастанию).</param>
 public record GetAllProductsQuery(int CategoryId, string SortName, string SortOrder) : IRequest<List<ProductDto>>;
 
-public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
+public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, List<ProductDto>>
 {
     private readonly ApplicationDbContext _context;
 
-    public GetAllProductsHandler(ApplicationDbContext context)
+    public GetAllProductsQueryHandler(ApplicationDbContext context)
     {
         _context = context;
     }

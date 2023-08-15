@@ -15,11 +15,11 @@ namespace Eshop.Features.Product.Commands;
 /// <param name="Price">Стоимость продукта.</param>
 public record UpdateProductCommand(int Id, int ProductCategoryId, string Title, decimal Price) : IRequest;
 
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Unit>
+public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Unit>
 {
     private readonly ApplicationDbContext _context;
 
-    public UpdateProductHandler(ApplicationDbContext context)
+    public UpdateProductCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }

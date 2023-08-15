@@ -12,11 +12,11 @@ namespace Eshop.Features.Product.Queries;
 /// <param name="Id">Первичный ключ продукта.</param>
 public record GetProductByIdQuery(int Id) : IRequest<ProductDto>;
 
-public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductDto>
+public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto>
 {
     private readonly ApplicationDbContext _context;
 
-    public GetProductByIdHandler(ApplicationDbContext context)
+    public GetProductByIdQueryHandler(ApplicationDbContext context)
     {
         _context = context;
     }

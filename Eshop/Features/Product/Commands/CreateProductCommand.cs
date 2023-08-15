@@ -14,11 +14,11 @@ namespace Eshop.Features.Product.Commands;
 /// <param name="Price">Стоимость продукта.</param>
 public record CreateProductCommand(int ProductCategoryId, string Title, decimal Price) : IRequest<ProductDto>;
 
-public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductDto>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateProductHandler(ApplicationDbContext context)
+    public CreateProductCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }

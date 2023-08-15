@@ -10,11 +10,11 @@ namespace Eshop.Features.Product.Commands;
 /// <param name="Id">Первичный ключ продукта.</param>
 public record DeleteProductCommand(int Id) : IRequest;
 
-public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Unit>
+public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Unit>
 {
     private readonly ApplicationDbContext _context;
 
-    public DeleteProductHandler(ApplicationDbContext context)
+    public DeleteProductCommandHandler(ApplicationDbContext context)
     {
         _context = context;
     }
