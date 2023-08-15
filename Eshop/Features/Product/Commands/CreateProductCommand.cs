@@ -12,9 +12,9 @@ namespace Eshop.Features.Product.Commands;
 /// <param name="ProductCategoryId">Первичный ключ категории продукта.</param>
 /// <param name="Title">Наименование продукта.</param>
 /// <param name="Price">Стоимость продукта.</param>
-public record CreateProductCommand(int ProductCategoryId, string Title, decimal Price) : IRequest<ProductDto>;
+public record CreateProductCommand(int ProductCategoryId, string Title, decimal Price) : IRequest<int>;
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductDto>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
 {
     private readonly ApplicationDbContext _context;
 
@@ -23,7 +23,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         _context = context;
     }
 
-    public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var productToAdd = ProductMapper.MapToProduct(new ProductDto
         {
@@ -33,6 +33,6 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         });
         await _context.Products.AddAsync(productToAdd, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return ProductMapper.MapToDto(productToAdd);
+        return productToAdd.Id;
     }
 }

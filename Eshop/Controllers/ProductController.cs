@@ -44,8 +44,7 @@ public class ProductController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductCommand command)
     {
-        var productDto = await _mediator.Send(command);
-        return Json(new { redirectUrl = Url.Action("Details", new { id = productDto.Id }) });
+        return Json(new { redirectUrl = Url.Action("Details", new { id = await _mediator.Send(command) }) });
     }
 
     /// <summary>
