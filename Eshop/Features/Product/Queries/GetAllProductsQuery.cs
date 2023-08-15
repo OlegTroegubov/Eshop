@@ -1,12 +1,11 @@
 ﻿using Eshop.Dtos.Mappers;
 using Eshop.Dtos.Product;
-using Eshop.Models;
 using Eshop.Persistence;
-using Eshop.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Features.Product.Queries;
+
 /// <summary>
 ///     Команда для получения списка продуктов.
 /// </summary>

@@ -32,7 +32,8 @@ public class ProductController : Controller
     /// <param name="cancellationToken">Токен для отмены запроса</param>
     /// <returns>Список всех продуктов.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder,
+        CancellationToken cancellationToken)
     {
         return Json(await _mediator.Send(new GetAllProductsQuery(categoryId, sortName, sortOrder), cancellationToken));
     }
@@ -46,7 +47,8 @@ public class ProductController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        return Json(new { redirectUrl = Url.Action("Details", new { id = await _mediator.Send(command, cancellationToken) }) });
+        return Json(new
+            { redirectUrl = Url.Action("Details", new { id = await _mediator.Send(command, cancellationToken) }) });
     }
 
     /// <summary>
@@ -77,7 +79,8 @@ public class ProductController : Controller
     ///     Изменяет продукт.
     /// </summary>
     /// <param name="command">Команда для обновления продукта</param>
-    /// /// <param name="cancellationToken">Токен для отмены запроса</param>
+    /// ///
+    /// <param name="cancellationToken">Токен для отмены запроса</param>
     /// <returns>Модель продукта Dto измененного продукта</returns>
     [HttpPost]
     public async Task<IActionResult> Edit(UpdateProductCommand command, CancellationToken cancellationToken)

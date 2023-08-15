@@ -1,4 +1,4 @@
-using Eshop.Models;
+using Eshop.Persistence;
 using Eshop.Persistence.Configuration;
 using Eshop.Services;
 using MediatR;

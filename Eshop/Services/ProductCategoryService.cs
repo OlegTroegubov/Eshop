@@ -1,5 +1,6 @@
 ﻿using Eshop.Dtos.ProductCategory;
 using Eshop.Models;
+using Eshop.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Services;

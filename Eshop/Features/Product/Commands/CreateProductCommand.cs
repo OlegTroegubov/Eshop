@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using Eshop.Dtos.Mappers;
 using Eshop.Dtos.Product;
-using Eshop.Models;
 using Eshop.Persistence;
 using MediatR;
 

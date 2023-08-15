@@ -1,6 +1,5 @@
 ﻿using Eshop.Dtos.Mappers;
 using Eshop.Dtos.Product;
-using Eshop.Models;
 using Eshop.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

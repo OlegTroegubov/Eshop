@@ -1,5 +1,4 @@
-﻿using Eshop.Models;
-using Eshop.Persistence;
+﻿using Eshop.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
