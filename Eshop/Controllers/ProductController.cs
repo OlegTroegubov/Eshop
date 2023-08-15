@@ -29,43 +29,47 @@ public class ProductController : Controller
     /// <param name="categoryId"> Id категории, по которой идет фильтраци</param>
     /// <param name="sortName">Имя свойства продукта для сортировки</param>
     /// <param name="sortOrder">Направление сортировки(asc или desc)</param>
+    /// <param name="cancellationToken">Токен для отмены запроса</param>
     /// <returns>Список всех продуктов.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder)
+    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder, CancellationToken cancellationToken)
     {
-        return Json(await _mediator.Send(new GetAllProductsQuery(categoryId, sortName, sortOrder)));
+        return Json(await _mediator.Send(new GetAllProductsQuery(categoryId, sortName, sortOrder), cancellationToken));
     }
 
     /// <summary>
     ///     Добавляет продукт.
     /// </summary>
     /// <param name="command">Команда для создания продукта</param>
+    /// <param name="cancellationToken">Токен для отмены запроса</param>
     /// <returns>Модель продукта Dto добавленного продукта</returns>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateProductCommand command)
+    public async Task<IActionResult> Create(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        return Json(new { redirectUrl = Url.Action("Details", new { id = await _mediator.Send(command) }) });
+        return Json(new { redirectUrl = Url.Action("Details", new { id = await _mediator.Send(command, cancellationToken) }) });
     }
 
     /// <summary>
     ///     Получает продукт по указанному идентификатору.
     /// </summary>
-    /// <param name="id">Идентификатор продукта.</param>
+    /// <param name="query">Команда для получения продукта по идентификатору</param>
+    /// <param name="cancellationToken">Токен для отмены запроса</param>
     /// <returns>Модель продукта Dto с указанным идентификатором.</returns>
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
-        return View(await _mediator.Send(new GetProductByIdQuery(id)));
+        return View(await _mediator.Send(query, cancellationToken));
     }
 
     /// <summary>
     ///     Удаляет продукт по указанному идентификатору.
     /// </summary>
     /// <param name="command">Команда для удаления продукта</param>
+    /// <param name="cancellationToken">Токен для отмены запроса</param>
     [HttpPost]
-    public async Task<IActionResult> Delete(DeleteProductCommand command)
+    public async Task<IActionResult> Delete(DeleteProductCommand command, CancellationToken cancellationToken)
     {
-        await _mediator.Send(command);
+        await _mediator.Send(command, cancellationToken);
         return RedirectToAction("Index");
     }
 
@@ -73,11 +77,12 @@ public class ProductController : Controller
     ///     Изменяет продукт.
     /// </summary>
     /// <param name="command">Команда для обновления продукта</param>
-    /// <returns>Модель продукта Dto изменненого продукта</returns>
+    /// /// <param name="cancellationToken">Токен для отмены запроса</param>
+    /// <returns>Модель продукта Dto измененного продукта</returns>
     [HttpPost]
-    public async Task<IActionResult> Edit(UpdateProductCommand command)
+    public async Task<IActionResult> Edit(UpdateProductCommand command, CancellationToken cancellationToken)
     {
-        await _mediator.Send(command);
+        await _mediator.Send(command, cancellationToken);
         return Json(new { redirectUrl = Url.Action("Details", new { id = command.Id }) });
     }
 }
