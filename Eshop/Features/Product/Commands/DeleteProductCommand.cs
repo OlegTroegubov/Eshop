@@ -1,4 +1,5 @@
-﻿using Eshop.Persistence;
+﻿using System.ComponentModel.DataAnnotations;
+using Eshop.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +22,11 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
 
     public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        _context.Products.Remove(
-            await _context.Products.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken));
+        var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken);
+        
+        if (product is null) throw new ValidationException("Продукт не найден!");
+        
+        _context.Products.Remove(product);
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }

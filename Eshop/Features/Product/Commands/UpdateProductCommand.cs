@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-using Eshop.Dtos.Mappers;
-using Eshop.Dtos.Product;
+﻿using System.ComponentModel.DataAnnotations;
 using Eshop.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Features.Product.Commands;
 
@@ -26,13 +25,14 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        _context.Products.Update(ProductMapper.MapToProduct(new ProductDto
-        {
-            Id = request.Id,
-            ProductCategoryId = request.ProductCategoryId,
-            Title = request.Title,
-            Price = request.Price.ToString(CultureInfo.InvariantCulture)
-        }));
+        var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken);
+        
+        if (product is null) throw new ValidationException("Продукт не найден!");
+
+        product.ProductCategoryId = request.ProductCategoryId;
+        product.Price = request.Price;
+        product.Title = request.Title;
+        
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }

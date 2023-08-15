@@ -1,4 +1,5 @@
-﻿using Eshop.Dtos.Mappers;
+﻿using System.ComponentModel.DataAnnotations;
+using Eshop.Dtos.Mappers;
 using Eshop.Dtos.Product;
 using Eshop.Persistence;
 using MediatR;
@@ -23,8 +24,11 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
 
     public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        return ProductMapper.MapToDto(await _context.Products
-            .Include(product => product.ProductCategory)
-            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken));
+        var product = await _context.Products.Include(p => p.ProductCategory)
+            .FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken);
+        
+        if (product is null) throw new ValidationException("Продукт не найден!");
+
+        return ProductMapper.MapToDto(product);
     }
 }

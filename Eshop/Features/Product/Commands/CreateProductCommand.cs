@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-using Eshop.Dtos.Mappers;
-using Eshop.Dtos.Product;
+﻿using System.ComponentModel.DataAnnotations;
 using Eshop.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Features.Product.Commands;
 
@@ -25,14 +24,17 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 
     public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var productToAdd = ProductMapper.MapToProduct(new ProductDto
+        var alreadyExists = await _context.Products.AnyAsync(product => product.Title == request.Title, cancellationToken);
+        
+        if (alreadyExists) throw new ValidationException("Продукт с таким наименованием уже существует!");
+
+        var product = await _context.Products.AddAsync(new Models.Product
         {
             ProductCategoryId = request.ProductCategoryId,
             Title = request.Title,
-            Price = request.Price.ToString(CultureInfo.InvariantCulture)
-        });
-        await _context.Products.AddAsync(productToAdd, cancellationToken);
+            Price = request.Price
+        }, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
-        return productToAdd.Id;
+        return product.Entity.Id;
     }
 }
