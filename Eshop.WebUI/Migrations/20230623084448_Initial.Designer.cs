@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230627103048_NewTableMigration")]
-    partial class NewTableMigration
+    [Migration("20230623084448_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace Eshop.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Eshop.Models.Client", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace Eshop.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Eshop.Models.Order", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,14 +73,8 @@ namespace Eshop.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("DateOfOrderTime")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -89,7 +83,7 @@ namespace Eshop.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Eshop.Models.OrderProduct", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,72 +91,28 @@ namespace Eshop.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderProduct");
-                });
-
-            modelBuilder.Entity("Eshop.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ProductCategoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductCategoryId");
-
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Eshop.Models.ProductCategory", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductCategories");
-                });
-
-            modelBuilder.Entity("Eshop.Models.Order", b =>
-                {
-                    b.HasOne("Eshop.Models.Client", "Client")
-                        .WithMany()
+                    b.HasOne("Eshop.WebUI.Models.Client", "Client")
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -170,34 +120,21 @@ namespace Eshop.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Eshop.Models.OrderProduct", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Product", b =>
                 {
-                    b.HasOne("Eshop.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Eshop.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
+                    b.HasOne("Eshop.WebUI.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("Eshop.Models.Product", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Client", b =>
                 {
-                    b.HasOne("Eshop.Models.ProductCategory", "ProductCategory")
-                        .WithMany()
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Orders");
+                });
 
-                    b.Navigation("ProductCategory");
+            modelBuilder.Entity("Eshop.WebUI.Models.Order", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

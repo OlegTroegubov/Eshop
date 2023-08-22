@@ -4,6 +4,7 @@ using Eshop.Models;
 using Eshop.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230629111733_FixedConfiguration")]
+    partial class FixedConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +26,7 @@ namespace Eshop.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Eshop.Models.Client", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +65,7 @@ namespace Eshop.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Eshop.Models.Order", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +89,7 @@ namespace Eshop.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Eshop.Models.OrderProduct", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.OrderProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,7 +115,7 @@ namespace Eshop.Migrations
                     b.ToTable("OrderProduct");
                 });
 
-            modelBuilder.Entity("Eshop.Models.Product", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +141,7 @@ namespace Eshop.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Eshop.Models.ProductCategory", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,27 +149,19 @@ namespace Eshop.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsLastInHierarchy")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int?>("ParentProductCategoryId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentProductCategoryId");
 
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("Eshop.Models.Order", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Order", b =>
                 {
-                    b.HasOne("Eshop.Models.Client", "Client")
+                    b.HasOne("Eshop.WebUI.Models.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -175,15 +170,15 @@ namespace Eshop.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Eshop.Models.OrderProduct", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.OrderProduct", b =>
                 {
-                    b.HasOne("Eshop.Models.Order", "Order")
+                    b.HasOne("Eshop.WebUI.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Eshop.Models.Product", "Product")
+                    b.HasOne("Eshop.WebUI.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -194,24 +189,15 @@ namespace Eshop.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Eshop.Models.Product", b =>
+            modelBuilder.Entity("Eshop.WebUI.Models.Product", b =>
                 {
-                    b.HasOne("Eshop.Models.ProductCategory", "ProductCategory")
+                    b.HasOne("Eshop.WebUI.Models.ProductCategory", "ProductCategory")
                         .WithMany()
                         .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
-                });
-
-            modelBuilder.Entity("Eshop.Models.ProductCategory", b =>
-                {
-                    b.HasOne("Eshop.Models.ProductCategory", "ParentProductCategory")
-                        .WithMany()
-                        .HasForeignKey("ParentProductCategoryId");
-
-                    b.Navigation("ParentProductCategory");
                 });
 #pragma warning restore 612, 618
         }
