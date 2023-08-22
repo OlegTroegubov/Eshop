@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Eshop.Exceptions;
 using Eshop.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,11 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken);
-        
-        if (product is null) throw new ValidationException("Продукт не найден!");
+
+        if (product is null)
+        {
+            throw new NotFoundException("Продукт не найден!");
+        }
 
         product.ProductCategoryId = request.ProductCategoryId;
         product.Price = request.Price;
