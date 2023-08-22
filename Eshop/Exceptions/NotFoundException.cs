@@ -2,13 +2,11 @@
 
 public class NotFoundException : Exception
 {
-    public NotFoundException() : base()
+    public NotFoundException()
     {
-        
     }
 
     public NotFoundException(string message) : base(message)
     {
-        
     }
 }

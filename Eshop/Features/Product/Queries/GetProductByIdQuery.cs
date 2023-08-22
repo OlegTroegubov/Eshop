@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Eshop.Dtos.Mappers;
 using Eshop.Dtos.Product;
+using Eshop.Exceptions;
 using Eshop.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,11 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
     {
         var product = await _context.Products.Include(p => p.ProductCategory)
             .FirstOrDefaultAsync(product => product.Id == request.Id, cancellationToken);
-        
-        if (product is null) throw new ValidationException("Продукт не найден!");
+
+        if (product is null)
+        {
+            throw new NotFoundException("Продукт не найден!");
+        }
 
         return ProductMapper.MapToDto(product);
     }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Eshop.Exceptions;
+﻿using Eshop.Exceptions;
 using Eshop.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -25,13 +24,14 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 
     public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var alreadyExists = await _context.Products.AnyAsync(product => product.Title == request.Title, cancellationToken);
+        var alreadyExists =
+            await _context.Products.AnyAsync(product => product.Title == request.Title, cancellationToken);
 
         if (alreadyExists)
         {
             throw new NotFoundException("Продукт с таким наименованием уже существует!");
         }
-        
+
         var product = await _context.Products.AddAsync(new Models.Product
         {
             ProductCategoryId = request.ProductCategoryId,
