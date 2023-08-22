@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class NewTableMigration : Migration

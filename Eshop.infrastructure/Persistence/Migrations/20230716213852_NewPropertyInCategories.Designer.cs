@@ -2,16 +2,15 @@
 
 #nullable disable
 
-using Eshop.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230706221028_FixedCategories")]
-    partial class FixedCategories
+    [Migration("20230716213852_NewPropertyInCategories")]
+    partial class NewPropertyInCategories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +144,9 @@ namespace Eshop.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsLastInHierarchy")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()

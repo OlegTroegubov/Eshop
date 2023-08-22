@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Eshop.Application\Eshop.Application.csproj"/>
+        <ProjectReference Include="..\Eshop.Application\Eshop.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0-preview.5.23280.1"/>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.4"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0-preview.5.23280.1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.4" />
     </ItemGroup>
 
 </Project>

@@ -2,16 +2,15 @@
 
 #nullable disable
 
-using Eshop.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230629111733_FixedConfiguration")]
-    partial class FixedConfiguration
+    [Migration("20230627103048_NewTableMigration")]
+    partial class NewTableMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

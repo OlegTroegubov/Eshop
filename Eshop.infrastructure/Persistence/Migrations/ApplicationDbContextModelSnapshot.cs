@@ -2,19 +2,15 @@
 
 #nullable disable
 
-using Eshop.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230627103048_NewTableMigration")]
-    partial class NewTableMigration
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,12 +142,20 @@ namespace Eshop.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsLastInHierarchy")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("ParentProductCategoryId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentProductCategoryId");
 
                     b.ToTable("ProductCategories");
                 });
@@ -195,6 +199,15 @@ namespace Eshop.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("Eshop.WebUI.Models.ProductCategory", b =>
+                {
+                    b.HasOne("Eshop.WebUI.Models.ProductCategory", "ParentProductCategory")
+                        .WithMany()
+                        .HasForeignKey("ParentProductCategoryId");
+
+                    b.Navigation("ParentProductCategory");
                 });
 #pragma warning restore 612, 618
         }

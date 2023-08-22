@@ -2,12 +2,11 @@
 
 #nullable disable
 
-using Eshop.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230625024118_NewMigration")]

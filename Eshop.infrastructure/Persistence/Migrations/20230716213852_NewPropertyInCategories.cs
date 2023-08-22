@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class NewPropertyInCategories : Migration

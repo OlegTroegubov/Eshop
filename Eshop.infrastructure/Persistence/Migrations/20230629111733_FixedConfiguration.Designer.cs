@@ -2,16 +2,15 @@
 
 #nullable disable
 
-using Eshop.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Eshop.Infrastructure.Migrations
+namespace Eshop.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230716213852_NewPropertyInCategories")]
-    partial class NewPropertyInCategories
+    [Migration("20230629111733_FixedConfiguration")]
+    partial class FixedConfiguration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,20 +145,12 @@ namespace Eshop.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsLastInHierarchy")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int?>("ParentProductCategoryId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentProductCategoryId");
 
                     b.ToTable("ProductCategories");
                 });
@@ -203,15 +194,6 @@ namespace Eshop.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
-                });
-
-            modelBuilder.Entity("Eshop.WebUI.Models.ProductCategory", b =>
-                {
-                    b.HasOne("Eshop.WebUI.Models.ProductCategory", "ParentProductCategory")
-                        .WithMany()
-                        .HasForeignKey("ParentProductCategoryId");
-
-                    b.Navigation("ParentProductCategory");
                 });
 #pragma warning restore 612, 618
         }
