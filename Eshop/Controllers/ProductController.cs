@@ -26,16 +26,14 @@ public class ProductController : Controller
     /// <summary>
     ///     Получает список всех продуктов.
     /// </summary>
-    /// <param name="categoryId"> Id категории, по которой идет фильтраци</param>
-    /// <param name="sortName">Имя свойства продукта для сортировки</param>
-    /// <param name="sortOrder">Направление сортировки(asc или desc)</param>
+    /// <param name="query">Команда для получения продукта по идентификатору</param>
     /// <param name="cancellationToken">Токен для отмены запроса</param>
     /// <returns>Список всех продуктов.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetProducts(int categoryId, string sortName, string sortOrder,
+    public async Task<IActionResult> GetProducts(GetAllProductsQuery query,
         CancellationToken cancellationToken)
     {
-        return Json(await _mediator.Send(new GetAllProductsQuery(categoryId, sortName, sortOrder), cancellationToken));
+        return Json(await _mediator.Send(query, cancellationToken));
     }
 
     /// <summary>
