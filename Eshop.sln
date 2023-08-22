@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.WebUI", "Eshop.WebUI\Eshop.WebUI.csproj", "{F5D93300-10D2-4107-8974-9A27D6AAFC9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.Domain", "Eshop.Domain\Eshop.Domain.csproj", "{A8269B58-B401-490E-9F61-D9C271971F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.Application", "Eshop.Application\Eshop.Application.csproj", "{DA7A2ED2-B2F1-46B0-83FB-F5364243FFFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshop.Infrastructure", "Eshop.Infrastructure\Eshop.Infrastructure.csproj", "{C92888CB-00E7-4E15-99B4-9C76021F945D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +19,17 @@ Global
 		{F5D93300-10D2-4107-8974-9A27D6AAFC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5D93300-10D2-4107-8974-9A27D6AAFC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5D93300-10D2-4107-8974-9A27D6AAFC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8269B58-B401-490E-9F61-D9C271971F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8269B58-B401-490E-9F61-D9C271971F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8269B58-B401-490E-9F61-D9C271971F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8269B58-B401-490E-9F61-D9C271971F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7A2ED2-B2F1-46B0-83FB-F5364243FFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7A2ED2-B2F1-46B0-83FB-F5364243FFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7A2ED2-B2F1-46B0-83FB-F5364243FFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7A2ED2-B2F1-46B0-83FB-F5364243FFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C92888CB-00E7-4E15-99B4-9C76021F945D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92888CB-00E7-4E15-99B4-9C76021F945D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92888CB-00E7-4E15-99B4-9C76021F945D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92888CB-00E7-4E15-99B4-9C76021F945D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
