@@ -1,7 +1,7 @@
 ﻿using Eshop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Eshop.Infrastructure.Persistence.Configuration;
+namespace Eshop.Infrastructure.Persistence;
 
 public class DbSeeder
 {
