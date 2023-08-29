@@ -28,7 +28,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         var alreadyExists =
             await _context.Products.AnyAsync(product => product.Title == request.Title, cancellationToken);
 
-        if (alreadyExists) throw new NotFoundException("Продукт с таким наименованием уже существует!");
+        if (alreadyExists) throw new ExistsException("Продукт с таким наименованием уже существует!");
 
         var product = await _context.Products.AddAsync(new Product
         {
